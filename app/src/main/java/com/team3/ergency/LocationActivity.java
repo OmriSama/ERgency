@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -101,23 +100,33 @@ public class LocationActivity extends AppCompatActivity
         mSearchView = (FloatingSearchView) findViewById(R.id.search_bar_floatingsearchview);
         mSearchResultsList = (RecyclerView) findViewById(R.id.search_results_list);
 
-        setupFloatingSearch();
+        setupSearchView();
 //        setupResultsList();
 //        setupDrawer();
     }
 
-    private void setupFloatingSearch() {
-        Log.d(TAG, "Location permission has already been granted.");
+    /**
+     * Setup the search view:
+     * (1) Listen to user typing text into the search and display suggestions
+     */
+    private void setupSearchView() {
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+
                 if (!oldQuery.equals("") && newQuery.equals("")) {
+                    // If text is erased, clear search suggestions
                     mSearchView.clearSuggestions();
                 }
                 else {
+                    // Create new placeHelper class to pass GoogleApiClient
                     PlaceHelper placeHelper = new PlaceHelper(mGoogleApiClient);
+
+                    // Show loading animation on the left side of the search view
                     mSearchView.showProgress();
-                    placeHelper.findSuggestions(LocationActivity.this, newQuery, 5,
+
+                    // Get predictions list and display the results. Remove the loading animation.
+                    placeHelper.getPrediction(LocationActivity.this, newQuery, 5,
                             new PlaceHelper.OnFindSuggestionsListener() {
                                 @Override
                                 public void onResults(List<PlaceSuggestion> results) {
@@ -165,10 +174,6 @@ public class LocationActivity extends AppCompatActivity
     }
 
     /**
-     * Set searchbar OnClickListener
-     */
-
-    /**
      * OnClick method for location request button
      */
     public void requestLocation(View view) {
@@ -191,7 +196,6 @@ public class LocationActivity extends AppCompatActivity
      */
     private void requestLocationPermission() {
         Log.d(TAG, "Location permission NOT granted. Requesting permission.");
-
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Display toast explanation for location permission
@@ -236,7 +240,7 @@ public class LocationActivity extends AppCompatActivity
     }
 
     /**
-     * Request a single location update and store that location.
+     * Request a single location update and store that location
      */
     private void getLocation() {
         // Acquire reference to system Location Manager
@@ -259,14 +263,21 @@ public class LocationActivity extends AppCompatActivity
         };
         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
-        Log.d(TAG, "Current location: " + mLocation.toString());
+        if (mLocation != null) {
+            Log.d(TAG, "Current location: " + mLocation.toString());
+        }
     }
 
+    /**
+     * Set the map the passed LatLng coordinate and adjust camera to its location
+     */
     private void setMap(LatLng coordinate) {
+        // Add a marker to coordinate
         mMap.addMarker(new MarkerOptions()
                 .position(coordinate)
                 .title("Marker"));
-        CameraUpdate cameraLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 15);
-        mMap.animateCamera(cameraLocation);
+
+        // Adjust camera to new coordinate
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 15));
     }
 }
