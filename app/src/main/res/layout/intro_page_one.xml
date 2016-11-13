@@ -16,13 +16,13 @@
 
         <ImageView
             style="@style/introImageView"
-            android:src="@drawable/assignment" />
+            android:src="@mipmap/ic_assignment_black_48dp" />
 
         <TextView
             style="@style/introDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save your personal medical profile and have them with you on the go" />
+            android:text="@string/intro_screen_one" />
 
     </LinearLayout>
 

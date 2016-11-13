@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">ERgency</string>
-    <string name="introOne">Medical Profile</string>
-    <string name="introTwo">Nearest Urgent Care and ERs</string>
-    <string name="introThree">Send Medical Information</string>
 
     <string name="join_now_button">Join Now</string>
+
+    <string name="intro_screen_one">Save your personal medical profile and have them with you on the go</string>
+    <string name="intro_screen_two">Find the nearest urgent care and ERs with a click of a button</string>
+    <string name="intro_screen_three">Send your registration form before you arrive to speed up the process</string>
 </resources>

@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.team3.ergency.adapter.CustomPagerAdapter;
+
 
 import java.util.Set;
 
@@ -43,8 +43,29 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton arrow_button;
     private Button join_now_button;
+    ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
 
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+            addBottomDots(position);
+            if (position == layouts.length - 1) {
+                join_now_button.setVisibility(View.GONE);
+            } else {
+                join_now_button.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         changeStatusBarColor();
 
         view_pager_adapter = new ViewPagerAdapter();
-        view_pager.setAdapter(new CustomPagerAdapter(this));
+        view_pager.setAdapter(view_pager_adapter);
         view_pager.addOnPageChangeListener(viewListener);
 
         join_now_button.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void addBottomDots(int position) {
         dots = new TextView[layouts.length];
         int[] colorActive = getResources().getIntArray(R.array.dot_active);
@@ -127,41 +147,10 @@ public class MainActivity extends AppCompatActivity {
             dots[position].setTextColor(colorActive[position]);
     }
 
-
     private int getItem(int i)
     {
         return view_pager.getCurrentItem() + i;
     }
-
-
-    ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener()
-    {
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-            addBottomDots(position);
-            if(position==layouts.length-1)
-            {
-                join_now_button.setVisibility(View.GONE);
-            }
-            else
-            {
-                join_now_button.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
 
     private void changeStatusBarColor()
     {
