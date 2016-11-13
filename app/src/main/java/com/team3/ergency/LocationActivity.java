@@ -9,12 +9,15 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,22 +25,27 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.team3.ergency.helper.PlaceHelper;
+import com.team3.ergency.helper.PlaceSuggestion;
 
-import static com.team3.ergency.R.id.map;
-
+import java.util.List;
 
 public class LocationActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
-
     /**
      * Log tag for LocationActivity
      */
-    public final String TAG = "LocationActivity";
+    public static final String TAG = "LocationActivity";
 
     /**
      * Id to identify a location permission request
      */
     public final int REQUEST_LOCATION_ID = 0;
+
+    /**
+     * GoogleAPIClient to use for predicting addresses
+     */
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      * Location to use for HospitalSearchActivity
@@ -47,23 +55,122 @@ public class LocationActivity extends AppCompatActivity
     /**
      * Map to use for displaying location
      */
-    GoogleMap mMap;
+    private GoogleMap mMap;
+
+    /**
+     * SearchView, SearchResultsList, SearchResultsAdapters for the search bar
+     */
+    private FloatingSearchView mSearchView;
+    private RecyclerView mSearchResultsList;
+//    private SearchResultsListAdapter mSearchResultsAdapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        // Create GoogleApiClient
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+
+        // Create a map fragment
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.map_fragment);
         mapFragment.getMapAsync(this);
+
+        // Setup floating search bar
+        mSearchView = (FloatingSearchView) findViewById(R.id.search_bar_floatingsearchview);
+        mSearchResultsList = (RecyclerView) findViewById(R.id.search_results_list);
+
+        setupFloatingSearch();
+//        setupResultsList();
+//        setupDrawer();
     }
 
+    private void setupFloatingSearch() {
+        Log.d(TAG, "Location permission has already been granted.");
+        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    mSearchView.clearSuggestions();
+                }
+                else {
+                    PlaceHelper placeHelper = new PlaceHelper(mGoogleApiClient);
+                    mSearchView.showProgress();
+                    placeHelper.findSuggestions(LocationActivity.this, newQuery, 5,
+                            new PlaceHelper.OnFindSuggestionsListener() {
+                                @Override
+                                public void onResults(List<PlaceSuggestion> results) {
+                                    mSearchView.swapSuggestions(results);
+                                    mSearchView.hideProgress();
+                                }
+                            });
+                }
+            }
+        });
+
+//        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+//            @Override
+//            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
+//                PlaceSuggestion placeSuggestion = (PlaceSuggestion) placeSuggestion;
+//                PlaceHelper.findPlace(getActivity(), colorSuggestion.getBody(),
+//                        new PlaceHelper.OnFindColorsListener() {
+//                            @Override
+//                            public void onResults(Lost<PlaceWrapper> results) {
+//                                mSearchResultsAdapter.swapData(results);
+//                            }
+//                        });
+//                mLastQuery = searchSuggestion.getBody();
+//            }
+//
+//            @Override
+//            public void onSearchAction(String query) {
+//                mLastQuery = query;
+//                PlaceHelper.findPlace(getActivity(), query, new PlaceHelper.OnFindPlaceListener() {
+//                    @Override
+//                    public void onResults(List<PlaceWrapper> results) {
+//                        mSearchResultsAdapter.swapData(results);
+//                    }
+//                });
+//            }
+//        });
+    }
+
+    /**
+     * Override callback when map is created
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
     }
 
+    /**
+     * Set searchbar OnClickListener
+     */
+
+    /**
+     * OnClick method for location request button
+     */
     public void requestLocation(View view) {
         // Check if location permissions are granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -101,47 +208,6 @@ public class LocationActivity extends AppCompatActivity
     }
 
     /**
-     * Request a single location update and store that location.
-     */
-    private void getLocation() {
-        // Acquire reference to system Location Manager
-        LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        final LocationListener mLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                mLocation = location;
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
-        Log.d(TAG, "Current location: " + mLocation.toString());
-    }
-
-    private void setMap(LatLng coordinate) {
-        mMap.addMarker(new MarkerOptions()
-                .position(coordinate)
-                .title("Marker"));
-        CameraUpdate cameraLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 15);
-        mMap.animateCamera(cameraLocation);
-    }
-
-    /**
      * Override callback received when permission response is received.
      */
     @Override
@@ -152,7 +218,9 @@ public class LocationActivity extends AppCompatActivity
 
             //  Check if location permission was granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission was granted. Do nothing.
+                Log.d(TAG, "Location permission has already been granted.");
+                getLocation();
+                setMap(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
             }
             else {
                 // Permission not granted. Disable location button
@@ -167,14 +235,38 @@ public class LocationActivity extends AppCompatActivity
         }
     }
 
-    public void submitLocation(View view) {
-        if (mLocation == null) {
-            EditText location_input = (EditText) findViewById(R.id.location_edittext);
-            // Go to next Activity
-        }
-        else {
-            // Go to next Activity
-        }
+    /**
+     * Request a single location update and store that location.
+     */
+    private void getLocation() {
+        // Acquire reference to system Location Manager
+        LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        final LocationListener mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLocation = location;
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            @Override
+            public void onProviderEnabled(String provider) {}
+
+            @Override
+            public void onProviderDisabled(String provider) {}
+        };
+        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
+        Log.d(TAG, "Current location: " + mLocation.toString());
     }
 
+    private void setMap(LatLng coordinate) {
+        mMap.addMarker(new MarkerOptions()
+                .position(coordinate)
+                .title("Marker"));
+        CameraUpdate cameraLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 15);
+        mMap.animateCamera(cameraLocation);
+    }
 }
