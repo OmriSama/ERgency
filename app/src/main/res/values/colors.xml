@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="color_primary">#F44336</color>
+    <color name="color_primary_dark">#E53935</color>
+    <color name="color_accent">@android:color/white</color>
+
+    <color name="intro_screen_one">#7E57C2</color>
+    <color name="intro_screen_two">#FF7043</color>
+    <color name="intro_screen_three">#26C6DA</color>
+
+    <color name="intro_text_color">@android:color/white</color>
+
+    <color name="dot_dark_screen_one">#673AB7</color>
+    <color name="dot_dark_screen_two">#F4511E</color>
+    <color name="dot_dark_screen_three">#00BCD4</color>
+
+    <color name="dot_light_screen_one">#9575CD</color>
+    <color name="dot_light_screen_two">#FF8A65</color>
+    <color name="dot_light_screen_three">#4DD0E1</color>
+
+    <array name="dot_active">
+        <item>@color/dot_dark_screen_one</item>
+        <item>@color/dot_dark_screen_two</item>
+        <item>@color/dot_dark_screen_three</item>
+    </array>
+
+    <array name="dot_inactive">
+        <item>@color/dot_light_screen_one</item>
+        <item>@color/dot_light_screen_two</item>
+        <item>@color/dot_light_screen_three</item>
+    </array>
+
 </resources>

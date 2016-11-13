@@ -1,11 +1,41 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <!--Don't know what the difference between these two are-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
     </style>
+
+    <!-- Don't know what this does either. Apparently, it prevents the app from crashing. Has
+    something to do with the gradle -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Style for the images in the intro pages -->
+    <style name="introImageView">
+        <item name="android:layout_width">@dimen/intro_image_width</item>
+        <item name="android:layout_height">@dimen/intro_image_width</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <!-- Style for the description text under the intro images -->
+    <style name="introDescriptionTextView" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">@dimen/intro_description_text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/intro_text_color</item>
+    </style>
+
+
+
+
+
 
 </resources>

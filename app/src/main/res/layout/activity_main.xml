@@ -4,12 +4,54 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@android:style/Theme.Holo.NoActionBar"
     tools:context="com.team3.ergency.MainActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/dots"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha=".5"
+        android:layout_above="@+id/dots"
+        android:background="@android:color/white" />
+
+    <Button
+        android:id="@+id/join_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join Now"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:background="@null"
+        android:onClick="launchProfile"/>
+
+    <ImageButton
+        android:id="@+id/arrow_next"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/foward_arrow_white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"/>
 
 </RelativeLayout>

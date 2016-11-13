@@ -3,4 +3,6 @@
     <string name="introOne">Medical Profile</string>
     <string name="introTwo">Nearest Urgent Care and ERs</string>
     <string name="introThree">Send Medical Information</string>
+
+    <string name="join_now_button">Join Now</string>
 </resources>
