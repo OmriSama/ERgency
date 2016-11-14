@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class PersonalInformation extends AppCompatActivity {
     private Spinner sex;
     private EditText address;
     private EditText city;
+    private AutoCompleteTextView state;
     private EditText zipCode;
     private EditText phoneNumber;
     private EditText emailAddress;
@@ -81,16 +83,15 @@ public class PersonalInformation extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        ArrayList<String> states = new ArrayList<String>() {
-        };
-        states.add("CA");
-        states.add("AL");
-        states.add("VA");
+        // Set the state text view so that when the user types in one word, a list of
+        // suggestions appear
+        state = (AutoCompleteTextView) findViewById(R.id.state);
+        String[] statesAbbr = getResources().getStringArray(R.array.states_abbr);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, statesAbbr);
+        //User must enter in at least one letter for the suggestions to appear
+        state.setThreshold(1);
+        state.setAdapter(adapter2);
 
-        AutoCompleteTextView stateTextView = (AutoCompleteTextView) findViewById(R.id.state);
-        ArrayAdapter<String> adapterStates = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, states);
-        stateTextView.setThreshold(1);
-        stateTextView.setAdapter(adapterStates);
 
         // This puts the numbers into a phone number format
         EditText editText = (EditText) findViewById(R.id.phone_number);
@@ -164,6 +165,13 @@ public class PersonalInformation extends AppCompatActivity {
             unfilledForms.add("City");
         }
 
+        userInput = state.getText().toString();
+        if (userInput.length() > 0) {
+            writeToFile("State: " + userInput + "\n", fileOut);
+        } else {
+            unfilledForms.add("State");
+        }
+
         zipCode = (EditText) findViewById(R.id.zip_code);
         userInput = zipCode.getText().toString();
         if (userInput.length() > 0) {
@@ -203,6 +211,7 @@ public class PersonalInformation extends AppCompatActivity {
 
     }
 
+    // Create a new text file in internal storage
     public FileOutputStream create_file(FileOutputStream fos) {
         try {
             fos = openFileOutput(filename, MODE_PRIVATE);
@@ -212,6 +221,7 @@ public class PersonalInformation extends AppCompatActivity {
         return fos;
     }
 
+    // Close file
     public void closeFile(FileOutputStream fileOut) {
         try {
             fileOut.close();
@@ -219,7 +229,6 @@ public class PersonalInformation extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     //Generate error popup message
     public void generate_error_popup(ArrayList<String> array) {
@@ -247,6 +256,7 @@ public class PersonalInformation extends AppCompatActivity {
 
     }
 
+    // Write information to the file
     public void writeToFile(String string, FileOutputStream fileOut) {
         try {
             fileOut.write(string.getBytes());
