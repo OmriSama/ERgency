@@ -3,9 +3,12 @@ package com.team3.ergency;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,10 +20,11 @@ import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.PlaceBuffer;
@@ -33,9 +37,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.team3.ergency.helper.PlaceWrapper;
-import com.team3.ergency.helper.PlaceHelper;
 import com.team3.ergency.helper.PlaceSuggestion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationActivity extends AppCompatActivity
@@ -84,6 +88,8 @@ public class LocationActivity extends AppCompatActivity
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
+
+        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
@@ -92,6 +98,7 @@ public class LocationActivity extends AppCompatActivity
             mGoogleApiClient.disconnect();
         }
         super.onStop();
+        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
@@ -103,7 +110,7 @@ public class LocationActivity extends AppCompatActivity
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
-                .build();
+                .addApi(AppIndex.API).build();
 
         // Create a map fragment
         SupportMapFragment mapFragment =
@@ -131,6 +138,7 @@ public class LocationActivity extends AppCompatActivity
     /**
      * Setup the search view:
      * (1) Listen to user typing text into the search and display suggestions
+     * (2) Change camera view and place marker on map when user selects a location
      */
     private void setupSearchView() {
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -142,21 +150,33 @@ public class LocationActivity extends AppCompatActivity
                     mSearchView.clearSuggestions();
                 }
                 else {
-                    // Create new placeHelper class to pass GoogleApiClient
-                    PlaceHelper placeHelper = new PlaceHelper(mGoogleApiClient);
-
                     // Show loading animation on the left side of the search view
                     mSearchView.showProgress();
 
-                    // Get predictions list and display the results. Remove the loading animation.
-                    placeHelper.getPrediction(LocationActivity.this, newQuery, 5,
-                            new PlaceHelper.OnFindSuggestionsListener() {
-                                @Override
-                                public void onResults(List<PlaceSuggestion> results) {
-                                    mSearchView.swapSuggestions(results);
-                                    mSearchView.hideProgress();
+                    getPredictions(newQuery, new ResultCallback<AutocompletePredictionBuffer>() {
+                        @Override
+                        public void onResult(AutocompletePredictionBuffer buffer) {
+                            if (buffer == null) { return; }
+
+                            List<PlaceSuggestion> suggestionList = new ArrayList<>();
+
+                            if (buffer.getStatus().isSuccess()) {
+                                for (AutocompletePrediction p : buffer) {
+                                    // Limit number of predictions to 5
+                                    if (suggestionList.size() > 5) {
+                                        break;
+                                    }
+                                    // Add new PlaceSuggestion to suggestion list
+                                    suggestionList.add(new PlaceSuggestion(new PlaceWrapper(
+                                            p.getFullText(null), p.getPlaceId())));
                                 }
-                            });
+                            }
+                            // Release buffer to prevent memory leak
+                            buffer.release();
+                            mSearchView.swapSuggestions(suggestionList);
+                            mSearchView.hideProgress();
+                        }
+                    });
                 }
             }
         });
@@ -169,7 +189,6 @@ public class LocationActivity extends AppCompatActivity
                     return;
                 }
                 setMapFromSearch(place);
-
             }
 
             @Override
@@ -215,7 +234,7 @@ public class LocationActivity extends AppCompatActivity
 
                                 if (buffer.getStatus().isSuccess()) {
                                     mCoordinates = buffer.get(0).getLatLng();
-                                    setMap(mCoordinates, "You");
+                                    setMap(mCoordinates, "You", true);
                                 }
                                 // Release buffer to prevent memory leak
                                 buffer.release();
@@ -238,7 +257,7 @@ public class LocationActivity extends AppCompatActivity
         else {
             Log.d(TAG, "Location permission has already been granted.");
             getLocation();
-            setMap(mCoordinates, "YOU");
+            setMap(mCoordinates, "YOU", true);
         }
     }
 
@@ -276,7 +295,7 @@ public class LocationActivity extends AppCompatActivity
                 Log.d(TAG, "Location permission granted.");
                 getLocation();
                 if (mCoordinates != null) {
-                    setMap(mCoordinates, "You");
+                    setMap(mCoordinates, "You", true);
                 }
             }
             else {
@@ -324,13 +343,34 @@ public class LocationActivity extends AppCompatActivity
     /**
      * Set the map the passed LatLng coordinates and adjust camera to its location
      */
-    private void setMap(LatLng coordinates, String text) {
-        // Add a marker to coordinates
-        mMap.addMarker(new MarkerOptions()
-                .position(coordinates)
-                .title(text));
+    private void setMap(LatLng coordinates, String text, boolean isClear) {
+        // Clear map of markers if needed
+        if (isClear) {
+            mMap.clear();
+        }
+
+//        // Add a marker to coordinates
+//        mMap.addMarker(new MarkerOptions()
+//                .position(coordinates)
+//                .title(text));
 
         // Adjust camera to new coordinates
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Location Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 }
