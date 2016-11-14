@@ -16,14 +16,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.team3.ergency.helper.PlaceWrapper;
 import com.team3.ergency.helper.PlaceHelper;
 import com.team3.ergency.helper.PlaceSuggestion;
 
@@ -31,15 +40,11 @@ import java.util.List;
 
 public class LocationActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
+
     /**
      * Log tag for LocationActivity
      */
     public static final String TAG = "LocationActivity";
-
-    /**
-     * Id to identify a location permission request
-     */
-    public final int REQUEST_LOCATION_ID = 0;
 
     /**
      * GoogleAPIClient to use for predicting addresses
@@ -47,9 +52,19 @@ public class LocationActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
 
     /**
-     * Location to use for HospitalSearchActivity
+     * Id for the request location id
+     */
+    private final int REQUEST_LOCATION_ID = 0;
+
+    /**
+     * Location to use for getting current location
      */
     private Location mLocation;
+
+    /**
+     * Coordinates to use for getting surrounding hospitals
+     */
+    private LatLng mCoordinates;
 
     /**
      * Map to use for displaying location
@@ -106,6 +121,14 @@ public class LocationActivity extends AppCompatActivity
     }
 
     /**
+     * Override callback when map is created
+     */
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+    }
+
+    /**
      * Setup the search view:
      * (1) Listen to user typing text into the search and display suggestions
      */
@@ -138,39 +161,67 @@ public class LocationActivity extends AppCompatActivity
             }
         });
 
-//        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
-//            @Override
-//            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-//                PlaceSuggestion placeSuggestion = (PlaceSuggestion) placeSuggestion;
-//                PlaceHelper.findPlace(getActivity(), colorSuggestion.getBody(),
-//                        new PlaceHelper.OnFindColorsListener() {
-//                            @Override
-//                            public void onResults(Lost<PlaceWrapper> results) {
-//                                mSearchResultsAdapter.swapData(results);
-//                            }
-//                        });
-//                mLastQuery = searchSuggestion.getBody();
-//            }
-//
-//            @Override
-//            public void onSearchAction(String query) {
-//                mLastQuery = query;
-//                PlaceHelper.findPlace(getActivity(), query, new PlaceHelper.OnFindPlaceListener() {
-//                    @Override
-//                    public void onResults(List<PlaceWrapper> results) {
-//                        mSearchResultsAdapter.swapData(results);
-//                    }
-//                });
-//            }
-//        });
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
+                PlaceWrapper place = ((PlaceSuggestion) searchSuggestion).getPlaceWrapper();
+                if (mGoogleApiClient == null) {
+                    return;
+                }
+                setMapFromSearch(place);
+
+            }
+
+            @Override
+            public void onSearchAction(String query) {
+                getPredictions(query, new ResultCallback<AutocompletePredictionBuffer>() {
+                    @Override
+                    public void onResult(AutocompletePredictionBuffer buffer) {
+                        if (buffer == null) { return; }
+
+                        if (buffer.getStatus().isSuccess()) {
+                            AutocompletePrediction prediction = buffer.get(0);
+                            PlaceWrapper place = new PlaceWrapper(
+                                    prediction.getFullText(null), prediction.getPlaceId());
+                            setMapFromSearch(place);
+                        }
+                        // Release buffer to prevent memory leak
+                        buffer.release();
+                    }
+                });
+            }
+        });
     }
 
-    /**
-     * Override callback when map is created
-     */
-    @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
+    private void getPredictions(String query, ResultCallback<AutocompletePredictionBuffer> callback) {
+        if (query != null && query.length() != 0 &&
+                mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            // Create and set LatLng bounds to the entire United States
+            LatLngBounds bounds = new LatLngBounds(new LatLng(28.70, -127.50),
+                    new LatLng(48.85, -55.90));
+
+            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, query.toString(), bounds, null)
+                    .setResultCallback(callback);
+        }
+    }
+
+    private void setMapFromSearch(PlaceWrapper place) {
+        Places.GeoDataApi.getPlaceById(mGoogleApiClient, place.getPlaceId())
+                .setResultCallback(
+                        new ResultCallback<PlaceBuffer>() {
+                            @Override
+                            public void onResult(PlaceBuffer buffer) {
+                                if (buffer == null) { return; }
+
+                                if (buffer.getStatus().isSuccess()) {
+                                    mCoordinates = buffer.get(0).getLatLng();
+                                    setMap(mCoordinates, "You");
+                                }
+                                // Release buffer to prevent memory leak
+                                buffer.release();
+                            }
+                        }
+                );
     }
 
     /**
@@ -187,7 +238,7 @@ public class LocationActivity extends AppCompatActivity
         else {
             Log.d(TAG, "Location permission has already been granted.");
             getLocation();
-            setMap(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+            setMap(mCoordinates, "YOU");
         }
     }
 
@@ -222,17 +273,19 @@ public class LocationActivity extends AppCompatActivity
 
             //  Check if location permission was granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Location permission has already been granted.");
+                Log.d(TAG, "Location permission granted.");
                 getLocation();
-                setMap(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+                if (mCoordinates != null) {
+                    setMap(mCoordinates, "You");
+                }
             }
             else {
                 // Permission not granted. Disable location button
                 Button requestLocationButton = (Button) findViewById(R.id.request_location_button);
                 requestLocationButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),
-                                R.string.permissions_needed_location, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.permissions_needed_location,
+                                Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -264,20 +317,20 @@ public class LocationActivity extends AppCompatActivity
         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
         if (mLocation != null) {
-            Log.d(TAG, "Current location: " + mLocation.toString());
+            mCoordinates = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         }
     }
 
     /**
-     * Set the map the passed LatLng coordinate and adjust camera to its location
+     * Set the map the passed LatLng coordinates and adjust camera to its location
      */
-    private void setMap(LatLng coordinate) {
-        // Add a marker to coordinate
+    private void setMap(LatLng coordinates, String text) {
+        // Add a marker to coordinates
         mMap.addMarker(new MarkerOptions()
-                .position(coordinate)
-                .title("Marker"));
+                .position(coordinates)
+                .title(text));
 
-        // Adjust camera to new coordinate
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 15));
+        // Adjust camera to new coordinates
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
     }
 }

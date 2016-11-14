@@ -10,22 +10,26 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
  */
 
 public class PlaceSuggestion implements SearchSuggestion {
-    private Place mPlace;
+    private PlaceWrapper mPlaceWrapper;
     private String mPlaceName;
     private boolean mIsHistory = false;
 
-    public PlaceSuggestion(Place suggestion) {
-        mPlace = suggestion;
+    public PlaceSuggestion(PlaceWrapper suggestion) {
+        mPlaceWrapper = suggestion;
         mPlaceName = suggestion.getName();
     }
 
     public PlaceSuggestion(Parcel source) {
-        mPlace = source.readParcelable(Place.class.getClassLoader());
+        mPlaceWrapper = source.readParcelable(PlaceWrapper.class.getClassLoader());
         mIsHistory = source.readInt() != 0;
     }
 
     public void setIsHistory(boolean isHistory) {
         isHistory = isHistory;
+    }
+
+    public PlaceWrapper getPlaceWrapper() {
+        return mPlaceWrapper;
     }
 
     public boolean getIsHistory() {

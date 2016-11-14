@@ -3,18 +3,23 @@ package com.team3.ergency.helper;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Filter;
+import android.os.Handler;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.GeoDataApi;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by howard on 11/13/16.
@@ -36,10 +41,14 @@ public class PlaceHelper {
      */
     private static GoogleApiClient mGoogleApiClient;
 
-    private static boolean mutex = false;
+    private static boolean predictionMutex = false;
 
     public PlaceHelper(GoogleApiClient googleApiClient) {
         mGoogleApiClient = googleApiClient;
+    }
+
+    public interface OnFindPlacesListener {
+        void onResults(PlaceWrapper results);
     }
 
     public interface OnFindSuggestionsListener {
@@ -63,7 +72,7 @@ public class PlaceHelper {
 
                     // Create and set LatLng bounds to the entire United States
                     LatLngBounds bounds = new LatLngBounds(new LatLng(28.70, -127.50),
-                                                           new LatLng(48.85, -55.90));
+                            new LatLng(48.85, -55.90));
 
                     // Create AutocompleteFilter with no filter
                     AutocompleteFilter filter = new AutocompleteFilter
@@ -72,7 +81,7 @@ public class PlaceHelper {
                             .build();
 
                     // Set mutex for getting predictions
-                    mutex = true;
+                    predictionMutex = true;
                     Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient,
                          constraint.toString(), bounds, filter)
                             .setResultCallback(
@@ -88,19 +97,19 @@ public class PlaceHelper {
                                                         break;
                                                     }
                                                     // Add new PlaceSuggestion to temp list
-                                                    tempSuggestionList.add(new PlaceSuggestion(new Place(
+                                                    tempSuggestionList.add(new PlaceSuggestion(new PlaceWrapper(
                                                             p.getFullText(null), p.getPlaceId())));
                                                 }
                                             }
                                             // Release buffer to prevent memory leak
                                             buffer.release();
-                                            mutex = false;
+                                            predictionMutex = false;
                                         }
                                     }
                             );
 
-                    // Wait until mutex is returned
-                    while (mutex) { /* Wait */  }
+                    // Wait until predictionMutex is returned
+                    while (predictionMutex) { /* Wait */  }
                 }
 
                 // Create new FilterResults and return results for processing

@@ -2,31 +2,31 @@ package com.team3.ergency.helper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import static android.R.attr.id;
 
 /**
  * Created by howard on 11/12/16.
  */
 
-public class Place implements Parcelable {
+public class PlaceWrapper implements Parcelable {
     private String mName;
     private String mPlaceId;
 
-    public Place(CharSequence name, String placeId) {
+    public PlaceWrapper(CharSequence name, String placeId) {
         mName = name.toString();
         mPlaceId = placeId;
     }
 
     public String getName() {
-        return mName.toString();
+        return mName;
     }
 
     public String getPlaceId() {
         return mPlaceId;
     }
 
-    public Place(Parcel source) {
+    public PlaceWrapper(Parcel source) {
         String [] data = new String[2];
 
         source.readStringArray(data);
@@ -45,12 +45,12 @@ public class Place implements Parcelable {
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Place createFromParcel(Parcel source) {
-            return new Place(source);
+        public PlaceWrapper createFromParcel(Parcel source) {
+            return new PlaceWrapper(source);
         }
 
-        public Place[] newArray(int size) {
-            return new Place[size];
+        public PlaceWrapper[] newArray(int size) {
+            return new PlaceWrapper[size];
         }
     };
 }
