@@ -6,17 +6,11 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-        <!--Don't know what the difference between these two are-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
     </style>
 
-    <!-- Don't know what this does either. Apparently, it prevents the app from crashing. Has
-    something to do with the gradle -->
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="introScreens" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <!-- Style for the images in the intro pages -->
     <style name="introImageView">
@@ -33,9 +27,14 @@
         <item name="android:textColor">@color/intro_text_color</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

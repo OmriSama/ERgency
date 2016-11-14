@@ -6,4 +6,14 @@
     <string name="intro_screen_one">Save your personal medical profile and have them with you on the go</string>
     <string name="intro_screen_two">Find the nearest urgent care and ERs with a click of a button</string>
     <string name="intro_screen_three">Send your registration form before you arrive to speed up the process</string>
+
+    <string-array name="sex">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="select_sex">sex</string>
+    <string name="title_activity_emergency_contact">EmergencyContact</string>
+
+
 </resources>
