@@ -19,11 +19,8 @@
         </activity>
         <activity
             android:name=".PersonalInformation"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".EmergencyContact"
-            android:label="@string/title_activity_emergency_contact"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".EmergencyContact"></activity>
     </application>
 
 </manifest>
