@@ -103,7 +103,7 @@ public class PersonalInformation extends AppCompatActivity {
         firstName = (EditText) findViewById(R.id.first_name);
         userInput = firstName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("First Name: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("First Name");
         }
@@ -111,15 +111,15 @@ public class PersonalInformation extends AppCompatActivity {
         middleName = (EditText) findViewById(R.id.middle_name);
         userInput = middleName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Middle Name: " + userInput + "\n", fileOut);
         } else {
-            writeToFile("\n", fileOut);
+            writeToFile("Middle Name: " + "\n", fileOut);
         }
 
         lastName = (EditText) findViewById(R.id.last_name);
         userInput = lastName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Last Name: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Last Name");
         }
@@ -127,7 +127,7 @@ public class PersonalInformation extends AppCompatActivity {
         dateOfBirth = (EditText) findViewById(R.id.date_of_birth);
         userInput = dateOfBirth.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Date of Birth: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Date of Birth");
         }
@@ -138,7 +138,7 @@ public class PersonalInformation extends AppCompatActivity {
         address = (EditText) findViewById(R.id.address);
         userInput = address.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Address: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Address");
         }
@@ -146,7 +146,7 @@ public class PersonalInformation extends AppCompatActivity {
         city = (EditText) findViewById(R.id.city);
         userInput = city.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("City: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("City");
         }
@@ -154,7 +154,7 @@ public class PersonalInformation extends AppCompatActivity {
         zipCode = (EditText) findViewById(R.id.zip_code);
         userInput = zipCode.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Zip Code: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Zip Code");
         }
@@ -162,7 +162,7 @@ public class PersonalInformation extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         userInput = phoneNumber.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Phone Number: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Phone Number");
         }
@@ -170,7 +170,7 @@ public class PersonalInformation extends AppCompatActivity {
         emailAddress = (EditText) findViewById(R.id.email_address);
         userInput = emailAddress.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile(userInput + "\n", fileOut);
+            writeToFile("Email Address: " + userInput + "\n", fileOut);
         } else {
             unfilledForms.add("Email Address");
         }
