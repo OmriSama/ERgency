@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -78,6 +80,17 @@ public class PersonalInformation extends AppCompatActivity {
                 R.array.sex, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        ArrayList<String> states = new ArrayList<String>() {
+        };
+        states.add("CA");
+        states.add("AL");
+        states.add("VA");
+
+        AutoCompleteTextView stateTextView = (AutoCompleteTextView) findViewById(R.id.state);
+        ArrayAdapter<String> adapterStates = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, states);
+        stateTextView.setThreshold(1);
+        stateTextView.setAdapter(adapterStates);
 
         // This puts the numbers into a phone number format
         EditText editText = (EditText) findViewById(R.id.phone_number);
@@ -241,7 +254,6 @@ public class PersonalInformation extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
 }
 
