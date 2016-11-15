@@ -3,26 +3,25 @@ package com.team3.ergency;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
@@ -35,12 +34,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.team3.ergency.adapter.HospitalListAdapter;
+import com.team3.ergency.helper.DistanceMatrixResponse;
+import com.team3.ergency.helper.Hospital;
+import com.team3.ergency.helper.HospitalSearchHelper;
+import com.team3.ergency.helper.NearbySearchResponse;
 import com.team3.ergency.helper.PlaceWrapper;
 import com.team3.ergency.helper.PlaceSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.text.TextUtils.split;
 
 public class LocationActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
@@ -71,6 +77,11 @@ public class LocationActivity extends AppCompatActivity
     private LatLng mCoordinates;
 
     /**
+     * Save a list of nearby Hospitals
+     */
+    private ArrayList<Hospital> mHospitals = new ArrayList<>();
+
+    /**
      * Map to use for displaying location
      */
     private GoogleMap mMap;
@@ -79,8 +90,6 @@ public class LocationActivity extends AppCompatActivity
      * SearchView, SearchResultsList, SearchResultsAdapters for the search bar
      */
     private FloatingSearchView mSearchView;
-    private RecyclerView mSearchResultsList;
-//    private SearchResultsListAdapter mSearchResultsAdapter;
 
     @Override
     protected void onStart() {
@@ -88,8 +97,6 @@ public class LocationActivity extends AppCompatActivity
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
-
-        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
@@ -98,7 +105,6 @@ public class LocationActivity extends AppCompatActivity
             mGoogleApiClient.disconnect();
         }
         super.onStop();
-        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
@@ -120,7 +126,6 @@ public class LocationActivity extends AppCompatActivity
 
         // Setup floating search bar
         mSearchView = (FloatingSearchView) findViewById(R.id.search_bar_floatingsearchview);
-        mSearchResultsList = (RecyclerView) findViewById(R.id.search_results_list);
 
         setupSearchView();
 //        setupResultsList();
@@ -155,9 +160,7 @@ public class LocationActivity extends AppCompatActivity
 
                     getPredictions(newQuery, new ResultCallback<AutocompletePredictionBuffer>() {
                         @Override
-                        public void onResult(AutocompletePredictionBuffer buffer) {
-                            if (buffer == null) { return; }
-
+                        public void onResult(@NonNull AutocompletePredictionBuffer buffer) {
                             List<PlaceSuggestion> suggestionList = new ArrayList<>();
 
                             if (buffer.getStatus().isSuccess()) {
@@ -195,9 +198,7 @@ public class LocationActivity extends AppCompatActivity
             public void onSearchAction(String query) {
                 getPredictions(query, new ResultCallback<AutocompletePredictionBuffer>() {
                     @Override
-                    public void onResult(AutocompletePredictionBuffer buffer) {
-                        if (buffer == null) { return; }
-
+                    public void onResult(@NonNull AutocompletePredictionBuffer buffer) {
                         if (buffer.getStatus().isSuccess()) {
                             AutocompletePrediction prediction = buffer.get(0);
                             PlaceWrapper place = new PlaceWrapper(
@@ -219,7 +220,7 @@ public class LocationActivity extends AppCompatActivity
             LatLngBounds bounds = new LatLngBounds(new LatLng(28.70, -127.50),
                     new LatLng(48.85, -55.90));
 
-            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, query.toString(), bounds, null)
+            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, query, bounds, null)
                     .setResultCallback(callback);
         }
     }
@@ -229,12 +230,12 @@ public class LocationActivity extends AppCompatActivity
                 .setResultCallback(
                         new ResultCallback<PlaceBuffer>() {
                             @Override
-                            public void onResult(PlaceBuffer buffer) {
-                                if (buffer == null) { return; }
-
+                            public void onResult(@NonNull PlaceBuffer buffer) {
                                 if (buffer.getStatus().isSuccess()) {
                                     mCoordinates = buffer.get(0).getLatLng();
                                     setMap(mCoordinates, "You", true);
+                                    // TODO findNearby
+                                    findNearbyHospitals("hospital+urgent+care+emergency");
                                 }
                                 // Release buffer to prevent memory leak
                                 buffer.release();
@@ -286,7 +287,7 @@ public class LocationActivity extends AppCompatActivity
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                          String permissions[], int[] grantResults) {
+                                           String permissions[], int[] grantResults) {
         if (requestCode == REQUEST_LOCATION_ID) {
             Log.d(TAG, "Location permission response received.");
 
@@ -300,7 +301,7 @@ public class LocationActivity extends AppCompatActivity
             }
             else {
                 // Permission not granted. Disable location button
-                Button requestLocationButton = (Button) findViewById(R.id.request_location_button);
+                ImageButton requestLocationButton = (ImageButton) findViewById(R.id.request_location_button);
                 requestLocationButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(getApplicationContext(), R.string.permissions_needed_location,
@@ -358,19 +359,134 @@ public class LocationActivity extends AppCompatActivity
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Location Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
+    private void findNearbyHospitals(String query) {
+        int parseLimit = 5;
+
+        String nearbySearchUrl = HospitalSearchHelper.generateNearbySearchUrl(
+                getResources().getString(R.string.key_google_maps_web_services),
+                query, mCoordinates.latitude, mCoordinates.longitude);
+        NearbySearchTask nearbySearchTask = new NearbySearchTask(parseLimit);
+        nearbySearchTask.execute(nearbySearchUrl);
+    }
+
+    private class NearbySearchTask extends AsyncTask<Object, Integer, ArrayList<String>> {
+        private int mParseLimit = 0;
+
+        public NearbySearchTask(int parseLimit) {
+            mParseLimit = parseLimit;
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(Object... inputObj ) {
+            String nearbySearchData = "";
+            try {
+                nearbySearchData = HospitalSearchHelper.readUrl((String) inputObj[0]);
+            }
+            catch (Exception e) {
+                Log.d(TAG, e.toString());
+            }
+
+            NearbySearchResponse response;
+            ArrayList<String> placeIds = new ArrayList<>();
+            try {
+                Gson gson = new Gson();
+                response = gson.fromJson(nearbySearchData, NearbySearchResponse.class);
+                for (int i = 0; i < mParseLimit; ++i) {
+                    placeIds.add(response.getResults().get(i).getPlace_id());
+                }
+            }
+            catch (Exception e) {
+                Log.d(TAG, e.toString());
+            }
+            return placeIds;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String>  result) {
+            DistanceMatrixTask distanceMatrixTask = new DistanceMatrixTask();
+            distanceMatrixTask.execute(result);
+
+        }
+    }
+
+    private class DistanceMatrixTask extends AsyncTask<Object, Integer, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Object... inputObj) {
+            String distanceMatrixUrl = HospitalSearchHelper.generateDistanceMatrixUrl(
+                    getResources().getString(R.string.key_google_maps_web_services),
+                    mCoordinates.latitude+","+mCoordinates.longitude,
+                    (ArrayList<String>) inputObj[0]);
+
+            String distanceMatrixData = "";
+
+            try {
+                distanceMatrixData = HospitalSearchHelper.readUrl(distanceMatrixUrl);
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
+            }
+
+            DistanceMatrixResponse response;
+            ArrayList<String> hospitalLocators = new ArrayList<>();
+
+            try {
+                Gson gson = new Gson();
+                response = gson.fromJson(distanceMatrixData, DistanceMatrixResponse.class);
+                int i = 0;
+                for (DistanceMatrixResponse.RowsBean.ElementsBean elements : response.getRows().get(0).getElements()) {
+                    hospitalLocators.add(((ArrayList<String>) inputObj[0]).get(i++) + "," +
+                            elements.getDistance().getText() + "," +
+                            elements.getDuration().getText());
+                }
+            }
+            catch (Exception e) {
+                Log.d(TAG, e.toString());
+            }
+
+            return hospitalLocators;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            compileHospitals(result);
+        }
+    }
+
+    public void compileHospitals(ArrayList<String> hospitalList) {
+        mHospitals.clear();
+        for (String hospitalLocator : hospitalList) {
+            String[] items = TextUtils.split(hospitalLocator, ",");
+            mHospitals.add(new Hospital(items[0], items[1], items[2], mGoogleApiClient));
+        }
+
+        WaitForHospitalsTask waitForHospitalsTask = new WaitForHospitalsTask();
+        waitForHospitalsTask.execute(mHospitals);
+    }
+
+    private class WaitForHospitalsTask extends AsyncTask<Object, Integer, Boolean> {
+        @Override
+        protected Boolean doInBackground(Object... inputObj) {
+            boolean processingSuccess = true;
+            for (Hospital hospital : (ArrayList<Hospital>) inputObj[0]) {
+                if (hospital.waitForProcessing() == false) {
+                    processingSuccess = false;
+                }
+            }
+            return processingSuccess;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            displayHospitals(result);
+        }
+    }
+
+    public void displayHospitals(boolean processingSuccess) {
+        HospitalListAdapter adapter = new HospitalListAdapter(this, mHospitals);
+        ListView hospitalListView = (ListView) findViewById(R.id.hospital_list_view);
+        hospitalListView.setAdapter(adapter);
+
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        hospitalListView.animate().translationY(size.y*(float)0.40);
     }
 }
