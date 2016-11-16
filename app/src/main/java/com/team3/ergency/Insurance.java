@@ -45,6 +45,7 @@ public class Insurance extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Emergency Contact");
         setContentView(R.layout.activity_insurance);
 
         // Set the state text view so that when the user types in one word, a list of
