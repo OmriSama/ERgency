@@ -19,5 +19,9 @@ public class SkipScreen extends AppCompatActivity {
         finish();
     }
 
-
+    public void continueForms(View view) {
+        Intent continuefilling = new Intent(this, PhysicianInfo.class);
+        startActivity(continuefilling);
+        finish();
+    }
 }

@@ -52,7 +52,9 @@
         <activity
             android:name=".Medications"
             android:label="Medications"></activity>
-        <activity android:name=".PhysicianInfo"></activity>
+        <activity
+            android:name=".PhysicianInfo"
+            android:label="Physician Info"></activity>
     </application>
 
 </manifest>
