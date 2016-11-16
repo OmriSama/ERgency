@@ -1,91 +1,51 @@
 package com.team3.ergency;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static android.R.attr.name;
-import static android.R.attr.path;
-import static android.R.attr.start;
-import static android.R.id.edit;
-import static android.R.id.input;
-import static android.content.Context.MODE_PRIVATE;
-import static android.os.Build.VERSION_CODES.M;
-import static com.team3.ergency.R.id.date_of_birth;
-import static com.team3.ergency.R.id.first_name;
+import static android.R.attr.phoneNumber;
+import static com.team3.ergency.R.id.address;
+import static com.team3.ergency.R.id.policy_holder_name;
+import static com.team3.ergency.R.id.state;
 
-import android.app.AlertDialog;
-import android.widget.Button;
-import android.widget.Toast;
+public class Insurance extends AppCompatActivity {
 
-public class PersonalInformation extends AppCompatActivity {
+    ArrayList<String> unfilledForms;
 
-    String filename = "PatientInformation.txt";
     FileOutputStream fileOut;
+    String fileName = "PatientInformation.txt";
 
-    private ArrayList<String> unfilledForms;
+    EditText policyHolderName;
+    EditText insuranceCompany;
+    EditText memberID;
+    EditText groupID;
+    EditText providerAddress;
+    EditText city;
+    AutoCompleteTextView state;
+    EditText zipCode;
+    EditText phoneNumber;
 
-    private EditText firstName;
-    private EditText middleName;
-    private EditText lastName;
-    private EditText dateOfBirth;
-    private Spinner sex;
-    private EditText address;
-    private EditText city;
-    private AutoCompleteTextView state;
-    private EditText zipCode;
-    private EditText phoneNumber;
-    private EditText emailAddress;
-
-    private String userInput;
+    String userInput;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getSupportActionBar().setTitle("Personal Information");
-        setContentView(R.layout.activity_personal_information);
-
-
-        // This creates the sex drop down menu
-        Spinner spinner = (Spinner) findViewById(R.id.sex);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.sex, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        setContentView(R.layout.activity_insurance);
 
         // Set the state text view so that when the user types in one word, a list of
         // suggestions appear
@@ -96,70 +56,62 @@ public class PersonalInformation extends AppCompatActivity {
         state.setThreshold(1);
         state.setAdapter(adapter2);
 
-
         // This puts the numbers into a phone number format
         EditText editText = (EditText) findViewById(R.id.phone_number);
         editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
-
-
-    // Date of Birth selection
-    public void launch_date_picker(View view) {
-        DatePickerFragment date_picker = new DatePickerFragment();
-        date_picker.show(getSupportFragmentManager(), "datePicker");
-    }
-
 
     // Writes the patient's information to the Patient Information file
     public void saveInfo(View view) {
 
         unfilledForms = new ArrayList<String>();
 
-        // Create a new file in internal storage to store the patient information
-        fileOut = create_file(fileOut);
+        // Open PatientInformation.txt in internal storage to store the patient information
+        try {
+            fileOut = new FileOutputStream(fileName, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //Get the text from each TextEdit, check if valid, and write to file
-        firstName = (EditText) findViewById(R.id.first_name);
-        userInput = firstName.getText().toString();
+        policyHolderName = (EditText) findViewById(R.id.policy_holder_name);
+        userInput = policyHolderName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("First Name: " + userInput + "\n", fileOut);
+            writeToFile("Policy Holder Name: " + userInput + "\n", fileOut);
         } else {
-            unfilledForms.add("First Name");
+            unfilledForms.add("Policy Holder Name");
         }
 
-        middleName = (EditText) findViewById(R.id.middle_name);
-        userInput = middleName.getText().toString();
+        insuranceCompany = (EditText) findViewById(R.id.insurance_company);
+        userInput = insuranceCompany.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Middle Name: " + userInput + "\n", fileOut);
+            writeToFile("Insurance Company: " + userInput + "\n", fileOut);
         } else {
-            writeToFile("Middle Name: " + "\n", fileOut);
+            writeToFile("Insurance Company: " + "\n", fileOut);
         }
 
-        lastName = (EditText) findViewById(R.id.last_name);
-        userInput = lastName.getText().toString();
+        memberID = (EditText) findViewById(R.id.member_id);
+        userInput = memberID.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Last Name: " + userInput + "\n", fileOut);
+            writeToFile("Member ID: " + userInput + "\n", fileOut);
         } else {
-            unfilledForms.add("Last Name");
+            unfilledForms.add("Member ID");
         }
 
-        dateOfBirth = (EditText) findViewById(R.id.date_of_birth);
-        userInput = dateOfBirth.getText().toString();
+        groupID = (EditText) findViewById(R.id.group_id);
+        userInput = groupID.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Date of Birth: " + userInput + "\n", fileOut);
+            writeToFile("Group ID: " + userInput + "\n", fileOut);
         } else {
-            unfilledForms.add("Date of Birth");
+            unfilledForms.add("Group ID");
         }
 
-        sex = (Spinner) findViewById(R.id.sex);
-        writeToFile(sex.getSelectedItem().toString() + "\n", fileOut);
-
-        address = (EditText) findViewById(R.id.address);
-        userInput = address.getText().toString();
+        providerAddress = (EditText) findViewById(address);
+        userInput = providerAddress.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Address: " + userInput + "\n", fileOut);
+            writeToFile("Provider Address: " + userInput + "\n", fileOut);
         } else {
-            unfilledForms.add("Address");
+            unfilledForms.add("Provider Address");
         }
 
         city = (EditText) findViewById(R.id.city);
@@ -193,20 +145,13 @@ public class PersonalInformation extends AppCompatActivity {
             unfilledForms.add("Phone Number");
         }
 
-        emailAddress = (EditText) findViewById(R.id.email_address);
-        userInput = emailAddress.getText().toString();
-        if (userInput.length() > 0) {
-            writeToFile("Email Address: " + userInput + "\n", fileOut);
-        } else {
-            unfilledForms.add("Email Address");
-        }
 
         //Close File
         closeFile(fileOut);
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, Insurance.class);
+            Intent i = new Intent(this, PersonalInformation.class);
             startActivity(i);
             finish();
         } else {
@@ -215,18 +160,6 @@ public class PersonalInformation extends AppCompatActivity {
         }
 
     }
-
-
-    // Create a new text file in internal storage
-    public FileOutputStream create_file(FileOutputStream fos) {
-        try {
-            fos = openFileOutput(filename, MODE_PRIVATE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return fos;
-    }
-
 
     // Write information to the file
     public void writeToFile(String string, FileOutputStream fileOut) {
@@ -246,7 +179,6 @@ public class PersonalInformation extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     //Generate error popup message
     public void generate_error_popup(ArrayList<String> array) {
@@ -276,6 +208,3 @@ public class PersonalInformation extends AppCompatActivity {
 
 
 }
-
-
-

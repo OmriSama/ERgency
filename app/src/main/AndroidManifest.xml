@@ -19,8 +19,10 @@
         </activity>
         <activity
             android:name=".PersonalInformation"
+            android:grantUriPermissions="true"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".EmergencyContact"></activity>
+
+        <activity android:name=".Insurance"></activity>
     </application>
 
 </manifest>
