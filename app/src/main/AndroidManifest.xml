@@ -21,9 +21,9 @@
             android:name=".PersonalInformation"
             android:grantUriPermissions="true"
             android:windowSoftInputMode="stateHidden" />
-
-        <activity android:name=".EmergencyContact"></activity>
-        <activity android:name=".Insurance"></activity>
+        <activity android:name=".EmergencyContact" />
+        <activity android:name=".Insurance" />
+        <activity android:name=".SkipScreen"></activity>
     </application>
 
 </manifest>
