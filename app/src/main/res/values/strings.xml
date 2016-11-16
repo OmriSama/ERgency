@@ -4,5 +4,7 @@
     <string name="key_google_maps_web_services">AIzaSyBdYYnZ_03IF3CoGylGKOpdCZgUOt3BceU</string>
     <string name="location_autocomplete_text">Enter your address</string>
     <string name="location_button_text">Use My Location</string>
+    <string name="output_file_patient_information">PatientInformation.txt</string>
+    <string name="output_file_hospital_information">HospitalInformation.txt</string>
     <string name="permissions_needed_location">Location access is required to automatically find your location.</string>
 </resources>

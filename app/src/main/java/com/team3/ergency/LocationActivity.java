@@ -1,6 +1,7 @@
 package com.team3.ergency;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -9,14 +10,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -34,6 +38,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.team3.ergency.adapter.HospitalListAdapter;
 import com.team3.ergency.helper.DistanceMatrixResponse;
@@ -43,10 +48,11 @@ import com.team3.ergency.helper.NearbySearchResponse;
 import com.team3.ergency.helper.PlaceWrapper;
 import com.team3.ergency.helper.PlaceSuggestion;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.text.TextUtils.split;
+import static com.team3.ergency.R.id.hospital_list_view;
 
 public class LocationActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
@@ -126,10 +132,18 @@ public class LocationActivity extends AppCompatActivity
 
         // Setup floating search bar
         mSearchView = (FloatingSearchView) findViewById(R.id.search_bar_floatingsearchview);
-
         setupSearchView();
-//        setupResultsList();
-//        setupDrawer();
+
+        // Set ListView off screen
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+
+        ListView hospitalListView = (ListView) findViewById(R.id.hospital_list_view);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)
+                hospitalListView.getLayoutParams();
+        int height = params.height = (int) (size.y * 0.45);
+        params.setMargins(0, 0, 0, -1 * height);
+        hospitalListView.setLayoutParams(params);
     }
 
     /**
@@ -233,8 +247,6 @@ public class LocationActivity extends AppCompatActivity
                             public void onResult(@NonNull PlaceBuffer buffer) {
                                 if (buffer.getStatus().isSuccess()) {
                                     mCoordinates = buffer.get(0).getLatLng();
-                                    setMap(mCoordinates, "You", true);
-                                    // TODO findNearby
                                     findNearbyHospitals("hospital+urgent+care+emergency");
                                 }
                                 // Release buffer to prevent memory leak
@@ -258,7 +270,7 @@ public class LocationActivity extends AppCompatActivity
         else {
             Log.d(TAG, "Location permission has already been granted.");
             getLocation();
-            setMap(mCoordinates, "YOU", true);
+            findNearbyHospitals("hospital+urgent+care+emergency");
         }
     }
 
@@ -296,7 +308,7 @@ public class LocationActivity extends AppCompatActivity
                 Log.d(TAG, "Location permission granted.");
                 getLocation();
                 if (mCoordinates != null) {
-                    setMap(mCoordinates, "You", true);
+                    findNearbyHospitals("hospital+urgent+care+emergency");
                 }
             }
             else {
@@ -341,25 +353,11 @@ public class LocationActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Set the map the passed LatLng coordinates and adjust camera to its location
-     */
-    private void setMap(LatLng coordinates, String text, boolean isClear) {
-        // Clear map of markers if needed
-        if (isClear) {
-            mMap.clear();
-        }
-
-//        // Add a marker to coordinates
-//        mMap.addMarker(new MarkerOptions()
-//                .position(coordinates)
-//                .title(text));
-
-        // Adjust camera to new coordinates
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
-    }
-
     private void findNearbyHospitals(String query) {
+        FloatingActionButton locationButton = (FloatingActionButton) findViewById(
+                R.id.request_location_button);
+        animateY(locationButton, 2, 200);
+
         int parseLimit = 5;
 
         String nearbySearchUrl = HospitalSearchHelper.generateNearbySearchUrl(
@@ -482,11 +480,73 @@ public class LocationActivity extends AppCompatActivity
 
     public void displayHospitals(boolean processingSuccess) {
         HospitalListAdapter adapter = new HospitalListAdapter(this, mHospitals);
-        ListView hospitalListView = (ListView) findViewById(R.id.hospital_list_view);
+        final ListView hospitalListView = (ListView) findViewById(hospital_list_view);
         hospitalListView.setAdapter(adapter);
 
+        setMap(true);
+
+        animateY(hospitalListView, -1, 500);
+
+        hospitalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Create a file stream to store hospital information
+                FileOutputStream fos = null;
+                try {
+                    fos = openFileOutput(getResources().getString(
+                            R.string.output_file_hospital_information), MODE_PRIVATE);
+                }
+                catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+
+                // Write hospital information to file stream
+                try {
+                    if (fos != null) {
+                        fos.write(hospitalListView.getItemAtPosition(position)
+                                .toString()
+                                .getBytes());
+                    }
+                }
+                catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+            }
+        });
+    }
+
+    /**
+     * Set the map the passed LatLng coordinates and adjust camera to its location
+     */
+    private void setMap(boolean isClear) {
+        // Clear map of markers if needed
+        if (isClear) {
+            mMap.clear();
+        }
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Hospital hospital : mHospitals) {
+            builder.include(mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(hospital.getLat(), hospital.getLng()))
+                .title(hospital.getName())
+                .snippet(hospital.getDistance()))
+                    .getPosition());
+        }
+
+        // Adjust camera to new coordinates
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        hospitalListView.animate().translationY(size.y*(float)0.40);
+        mMap.setPadding(0, 100, 0, (int) (size.y/2.25));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
+    }
+
+    /**
+     * Animations functions for ListView and Button
+     */
+    private void animateY(View view, int distance, int duration) {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(view,
+                View.TRANSLATION_Y, 0, distance * view.getHeight());
+        anim.setDuration(duration);
+        anim.start();
     }
 }
