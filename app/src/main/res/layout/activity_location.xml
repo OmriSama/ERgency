@@ -51,5 +51,4 @@
         app:backgroundTint="@android:color/white"
         app:elevation="6dp"
         app:fabSize="normal" />
-
 </RelativeLayout>

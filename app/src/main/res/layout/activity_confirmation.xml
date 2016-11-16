@@ -40,5 +40,4 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white" />
     </LinearLayout>
-
 </RelativeLayout>
