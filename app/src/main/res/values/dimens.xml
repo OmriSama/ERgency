@@ -2,6 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_edge_horizontal_margin">8dp</dimen>
+    <dimen name="activity_edge_vertical_margin">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="hospital_list_item_height">88dp</dimen>
 
 
     <dimen name="intro_image_height">150dp</dimen>
@@ -10,5 +14,5 @@
     <dimen name="join_now_text_size">20sp</dimen>
 
     <dimen name="save_button_width">200dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+
 </resources>
