@@ -30,7 +30,7 @@
         <activity android:name=".SkipScreen" />
         <activity android:name=".Allergies" />
         <activity android:name=".Immunizations" />
-        <activity android:name=".Confirmation"></activity>
+        <activity android:name=".Confirmation" />
         <activity
             android:name=".HomepageActivity"
             android:label="ERgency">
@@ -39,13 +39,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".LocationActivity"
-            android:label="Find Your Nearest Hospitals">
-        </activity>
+            android:label="Find Your Nearest Hospitals"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -53,5 +50,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".Medications" android:label="Medications"></activity>
     </application>
+
 </manifest>
