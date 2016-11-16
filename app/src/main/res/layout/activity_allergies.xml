@@ -61,5 +61,4 @@
             android:onClick="saveInsuranceInfo"
             android:text="CONTINUE" />
     </LinearLayout>
-
 </RelativeLayout>
