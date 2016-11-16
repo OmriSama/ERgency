@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:onClick="saveECInfo"
-            android:text="Continue" />
+            android:onClick="saveECInfo (EmergencyContact)"
+            android:text="CONTINUE" />
     </LinearLayout>
 </RelativeLayout>

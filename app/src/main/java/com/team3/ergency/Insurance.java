@@ -45,7 +45,7 @@ public class Insurance extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Emergency Contact");
+        getSupportActionBar().setTitle("Insurance Information");
         setContentView(R.layout.activity_insurance);
 
         // Set the state text view so that when the user types in one word, a list of
@@ -152,7 +152,7 @@ public class Insurance extends AppCompatActivity {
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, PersonalInformation.class);
+            Intent i = new Intent(this, Allergies.class);
             startActivity(i);
             finish();
         } else {
