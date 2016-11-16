@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Phone Number*"
-            android:inputType="phone" />
+            android:inputType="number" />
 
         <Button
             android:layout_width="match_parent"
