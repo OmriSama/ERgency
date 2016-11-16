@@ -22,6 +22,7 @@
             android:grantUriPermissions="true"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity android:name=".EmergencyContact"></activity>
         <activity android:name=".Insurance"></activity>
     </application>
 

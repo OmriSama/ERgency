@@ -11,77 +11,78 @@
     tools:context="com.team3.ergency.EmergencyContact">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/ec_full_name"
-            android:layout_margin="5dp"
-            android:hint="Contact Full Name*" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPostalAddress"
-            android:ems="10"
-            android:id="@+id/ec_address"
             android:layout_margin="5dp"
-            android:hint="Address*" />
+            android:ems="10"
+            android:hint="Contact Full Name*"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/ec_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="Address*"
+            android:inputType="textPostalAddress" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:ems="10"
                 android:id="@+id/ec_city"
-                android:layout_margin="5dp"
-                android:hint="City*" />
-
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/ec_zip_code"
                 android:layout_margin="5dp"
-                android:hint="Zip*"
+                android:ems="10"
+                android:hint="City*"
+                android:inputType="textCapSentences" />
+
+            <EditText
+                android:id="@+id/ec_zip_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Zip Code*"
                 android:inputType="number" />
 
         </LinearLayout>
 
         <AutoCompleteTextView
+            android:id="@+id/ec_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ec_state"
             android:layout_margin="5dp"
             android:hint="State*" />
 
         <EditText
+            android:id="@+id/ec_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/ec_phone_number"
-            android:hint="Phone Number*"
             android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="Phone Number*"
             android:inputType="phone" />
 
         <Button
-            android:text="Continue"
+            android:id="@+id/ec_continue_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ec_continue_button"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:onClick="saveECInfo"
+            android:text="Continue" />
     </LinearLayout>
 </RelativeLayout>

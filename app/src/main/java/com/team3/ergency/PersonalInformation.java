@@ -205,7 +205,7 @@ public class PersonalInformation extends AppCompatActivity {
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, Insurance.class);
+            Intent i = new Intent(this, EmergencyContact.class);
             startActivity(i);
             finish();
         } else {
@@ -270,7 +270,6 @@ public class PersonalInformation extends AppCompatActivity {
 
         AlertDialog errorDialog = builder.create();
         errorDialog.show();
-
     }
 
 

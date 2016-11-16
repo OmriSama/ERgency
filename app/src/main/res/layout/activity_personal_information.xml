@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="First Name*"
-            android:inputType="textPersonName"
-            android:tag="First_Name" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/middle_name"
@@ -30,8 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Middle Name"
-            android:inputType="textPersonName"
-            android:tag="Middle_Name" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/last_name"
@@ -39,8 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Last Name*"
-            android:inputType="textPersonName"
-            android:tag="Last_Name" />
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,8 +52,7 @@
                 android:layout_weight="3"
                 android:focusable="false"
                 android:hint="Date of Birth*"
-                android:onClick="launch_date_picker"
-                android:tag="Date_Of_Birth" />
+                android:onClick="launch_date_picker" />
 
             <Spinner
                 android:id="@+id/sex"
@@ -75,8 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Address*"
-            android:inputType="textPostalAddress"
-            android:tag="Address" />
+            android:inputType="textPostalAddress" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,8 +85,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="3"
                 android:hint="City*"
-                android:inputType="textCapSentences"
-                android:tag="City" />
+                android:inputType="textCapSentences" />
 
             <AutoCompleteTextView
                 android:id="@+id/state"
@@ -108,8 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Zip Code*"
-            android:inputType="number"
-            android:tag="Zip_Code" />
+            android:inputType="number" />
 
 
         <EditText
@@ -118,8 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Phone Number*"
-            android:inputType="phone"
-            android:tag="Phone_Number" />
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/email_address"
@@ -127,14 +119,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Email*"
-            android:inputType="textEmailAddress"
-            android:tag="Email_Address" />
+            android:inputType="textEmailAddress" />
 
         <Button
             android:layout_width="@dimen/save_button_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
+            android:onClick="saveInfo"
             android:text="Save" />
     </LinearLayout>
 

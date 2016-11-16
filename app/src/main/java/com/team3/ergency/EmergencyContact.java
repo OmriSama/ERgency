@@ -31,17 +31,12 @@ public class EmergencyContact extends AppCompatActivity {
     FileOutputStream fileOut;
     private ArrayList<String> unfilledForms;
     private EditText ecFullName;
-    //private EditText middleName;
-    //private EditText lastName;
-    //private EditText dateOfBirth;
-    //private Spinner sex;
     private EditText ecAddress;
     private EditText ecCity;
     private AutoCompleteTextView ecState;
     private EditText ecZipCode;
     private EditText ecPhoneNumber;
     private Button continueBt;
-    //private EditText emailAddress;
 
     private String userInput;
 
@@ -134,7 +129,7 @@ public class EmergencyContact extends AppCompatActivity {
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, PersonalInformation.class);
+            Intent i = new Intent(this, Insurance.class);
             startActivity(i);
             finish();
         } else {
