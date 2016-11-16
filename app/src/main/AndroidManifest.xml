@@ -51,6 +51,8 @@
             android:name=".Confirmation"
             android:label="Confirmation">
         </activity>
+        <activity android:name=".Medications" android:label="Medications"></activity>
     </application>
+
 
 </manifest>
