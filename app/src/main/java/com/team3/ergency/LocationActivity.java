@@ -346,6 +346,7 @@ public class LocationActivity extends AppCompatActivity
             @Override
             public void onProviderDisabled(String provider) {}
         };
+
         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
         if (mLocation != null) {

@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40sp"
             android:background="@android:color/holo_red_light"
+            android:onClick="goToHomepage"
             android:text="Go to Homepage"
             android:textAllCaps="true" />
 
