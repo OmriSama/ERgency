@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<activity xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.team3.ergency">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,6 +12,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/key_google_maps_android" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/introScreens">
@@ -29,29 +37,20 @@
         <activity android:name=".Insurance" />
         <activity android:name=".SkipScreen" />
         <activity android:name=".Allergies" />
-        <activity android:name=".Immunizations" />
-        <activity android:name=".Confirmation"></activity>
-        <activity
+        <activity android:name=".Immunizations"
             android:name=".HomepageActivity"
             android:label="ERgency">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
-
         <activity
             android:name=".LocationActivity"
-            android:label="Find Your Nearest Hospitals">
+            android:label="Find Your Nearest Hospitals"></activity>
+        <activity
+            android:name=".QuickRegistrationActivity"
+            android:label="Quick Registration"></activity>
+        <activity
+            android:name=".Confirmation"
+            android:label="Confirmation">
         </activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/key_google_maps_android" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
     </application>
+
 </manifest>
