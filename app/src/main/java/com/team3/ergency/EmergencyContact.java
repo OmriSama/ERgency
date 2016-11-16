@@ -85,7 +85,7 @@ public class EmergencyContact extends AppCompatActivity {
         ecFullName = (EditText) findViewById(R.id.ec_full_name);
         userInput = ecFullName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Contact Full Name: " + userInput + "\n", fileOut);
+            writeToFile("Contact Full Name: " + userInput + "\n");
         } else {
             unfilledForms.add("Contact Full Name");
         }
@@ -93,7 +93,7 @@ public class EmergencyContact extends AppCompatActivity {
         ecAddress = (EditText) findViewById(R.id.ec_address);
         userInput = ecAddress.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Address: " + userInput + "\n", fileOut);
+            writeToFile("Address: " + userInput + "\n");
         } else {
             unfilledForms.add("Address");
         }
@@ -101,14 +101,14 @@ public class EmergencyContact extends AppCompatActivity {
         ecCity = (EditText) findViewById(R.id.ec_city);
         userInput = ecCity.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("City: " + userInput + "\n", fileOut);
+            writeToFile("City: " + userInput + "\n");
         } else {
             unfilledForms.add("City");
         }
 
         userInput = ecState.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("State: " + userInput + "\n", fileOut);
+            writeToFile("State: " + userInput + "\n");
         } else {
             unfilledForms.add("State");
         }
@@ -116,7 +116,7 @@ public class EmergencyContact extends AppCompatActivity {
         ecZipCode = (EditText) findViewById(R.id.ec_zip_code);
         userInput = ecZipCode.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Zip Code: " + userInput + "\n", fileOut);
+            writeToFile("Zip Code: " + userInput + "\n");
         } else {
             unfilledForms.add("Zip Code");
         }
@@ -124,7 +124,7 @@ public class EmergencyContact extends AppCompatActivity {
         ecPhoneNumber = (EditText) findViewById(R.id.ec_phone_number);
         userInput = ecPhoneNumber.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Phone Number: " + userInput + "\n", fileOut);
+            writeToFile("Phone Number: " + userInput + "\n");
         } else {
             unfilledForms.add("Phone Number");
         }
@@ -181,7 +181,7 @@ public class EmergencyContact extends AppCompatActivity {
     }
 
     // Write information to the file
-    public void writeToFile(String string, FileOutputStream fileOut) {
+    public void writeToFile(String string) {
         try {
             fileOut.write(string.getBytes());
         } catch (IOException e) {

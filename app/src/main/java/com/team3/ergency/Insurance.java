@@ -80,7 +80,7 @@ public class Insurance extends AppCompatActivity {
         policyHolderName = (EditText) findViewById(R.id.policy_holder_name);
         userInput = policyHolderName.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Policy Holder Name: " + userInput + "\n", fileOut);
+            writeToFile("Policy Holder Name: " + userInput + "\n");
         } else {
             unfilledForms.add("Policy Holder Name");
         }
@@ -88,15 +88,15 @@ public class Insurance extends AppCompatActivity {
         insuranceCompany = (EditText) findViewById(R.id.insurance_company);
         userInput = insuranceCompany.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Insurance Company: " + userInput + "\n", fileOut);
+            writeToFile("Insurance Company: " + userInput + "\n");
         } else {
-            writeToFile("Insurance Company: " + "\n", fileOut);
+            writeToFile("Insurance Company: " + "\n");
         }
 
         memberID = (EditText) findViewById(R.id.member_id);
         userInput = memberID.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Member ID: " + userInput + "\n", fileOut);
+            writeToFile("Member ID: " + userInput + "\n");
         } else {
             unfilledForms.add("Member ID");
         }
@@ -104,7 +104,7 @@ public class Insurance extends AppCompatActivity {
         groupID = (EditText) findViewById(R.id.group_id);
         userInput = groupID.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Group ID: " + userInput + "\n", fileOut);
+            writeToFile("Group ID: " + userInput + "\n");
         } else {
             unfilledForms.add("Group ID");
         }
@@ -112,7 +112,7 @@ public class Insurance extends AppCompatActivity {
         providerAddress = (EditText) findViewById(address);
         userInput = providerAddress.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Provider Address: " + userInput + "\n", fileOut);
+            writeToFile("Provider Address: " + userInput + "\n");
         } else {
             unfilledForms.add("Provider Address");
         }
@@ -120,14 +120,14 @@ public class Insurance extends AppCompatActivity {
         city = (EditText) findViewById(R.id.city);
         userInput = city.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("City: " + userInput + "\n", fileOut);
+            writeToFile("City: " + userInput + "\n");
         } else {
             unfilledForms.add("City");
         }
 
         userInput = state.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("State: " + userInput + "\n", fileOut);
+            writeToFile("State: " + userInput + "\n");
         } else {
             unfilledForms.add("State");
         }
@@ -135,7 +135,7 @@ public class Insurance extends AppCompatActivity {
         zipCode = (EditText) findViewById(R.id.zip_code);
         userInput = zipCode.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Zip Code: " + userInput + "\n", fileOut);
+            writeToFile("Zip Code: " + userInput + "\n");
         } else {
             unfilledForms.add("Zip Code");
         }
@@ -143,7 +143,7 @@ public class Insurance extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         userInput = phoneNumber.getText().toString();
         if (userInput.length() > 0) {
-            writeToFile("Phone Number: " + userInput + "\n", fileOut);
+            writeToFile("Phone Number: " + userInput + "\n");
         } else {
             unfilledForms.add("Phone Number");
         }
@@ -164,7 +164,7 @@ public class Insurance extends AppCompatActivity {
     }
 
     // Write information to the file
-    public void writeToFile(String string, FileOutputStream fileOut) {
+    public void writeToFile(String string) {
         try {
             fileOut.write(string.getBytes());
         } catch (IOException e) {
