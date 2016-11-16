@@ -23,7 +23,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".EmergencyContact" />
         <activity android:name=".Insurance" />
-        <activity android:name=".SkipScreen"></activity>
+        <activity android:name=".SkipScreen" />
+        <activity android:name=".Allergies"></activity>
     </application>
 
 </manifest>
