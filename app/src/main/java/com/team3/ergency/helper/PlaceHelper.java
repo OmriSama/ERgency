@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * Created by howard on 11/13/16.
  */
 
+
 public class PlaceHelper {
     /**
      * Log tag for LocationActivity

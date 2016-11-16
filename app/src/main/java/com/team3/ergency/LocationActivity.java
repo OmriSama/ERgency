@@ -549,4 +549,5 @@ public class LocationActivity extends AppCompatActivity
         anim.setDuration(duration);
         anim.start();
     }
+
 }

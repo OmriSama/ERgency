@@ -18,4 +18,5 @@ public class HomepageActivity extends AppCompatActivity {
         startActivity(locationIntent);
         finish();
     }
+
 }

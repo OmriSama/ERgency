@@ -19,6 +19,7 @@ import java.util.List;
  * Created by howard on 11/14/16.
  */
 
+
 public class HospitalListAdapter extends ArrayAdapter<Hospital> {
     public HospitalListAdapter(Context context, ArrayList<Hospital> hospitals) {
         super(context, 0, hospitals);

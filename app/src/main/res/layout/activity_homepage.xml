@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:alpha="0.15"
         android:scaleType="centerCrop"
-        android:src="@drawable/homepage_bg"/>
+        android:src="@drawable/homepage_background"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.util.Log;
  * Created by howard on 11/12/16.
  */
 
+
 public class PlaceWrapper implements Parcelable {
     private String mName;
     private String mPlaceId;

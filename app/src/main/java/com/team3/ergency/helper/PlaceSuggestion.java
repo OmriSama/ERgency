@@ -63,5 +63,4 @@ public class PlaceSuggestion implements SearchSuggestion {
         dest.writeString(mPlaceName);
         dest.writeInt(mIsHistory ? 1 : 0);
     }
-
 }

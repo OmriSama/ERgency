@@ -18,6 +18,7 @@ import static android.text.TextUtils.split;
  * Created by howard on 11/14/16.
  */
 
+
 public class Hospital {
     private String mPlaceId;
     private String mName;

@@ -15,6 +15,7 @@ import static android.R.attr.apiKey;
  * Created by howard on 11/13/16.
  */
 
+
 public class HospitalSearchHelper {
     public static final String TAG = "HospitalSearchHelper";
 
