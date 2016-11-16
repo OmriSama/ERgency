@@ -96,7 +96,6 @@ public class PersonalInformation extends AppCompatActivity {
         state.setThreshold(1);
         state.setAdapter(adapter2);
 
-
         // This puts the numbers into a phone number format
         EditText editText = (EditText) findViewById(R.id.phone_number);
         editText.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
