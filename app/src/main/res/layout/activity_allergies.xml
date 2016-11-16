@@ -11,53 +11,55 @@
     tools:context="com.team3.ergency.Allergies">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/medication_allergies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
             android:hint="List medication allergies*"
-            android:layout_margin="5dp" />
+            android:inputType="textPersonName" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/envoronmental_allergies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
             android:hint="List environmental allergies*"
-            android:layout_margin="5dp" />
+            android:inputType="textPersonName" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/food_allergies"
-            android:hint="List food allergies*"
-            android:layout_margin="5dp" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="List food allergies*"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/other_allergies"
-            android:hint="List any other allergies" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="List any other allergies"
+            android:inputType="textPersonName" />
 
         <Button
-            android:text="CONTINUE"
+            android:id="@+id/allergies_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/allergies_continue"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:onClick="saveInsuranceInfo"
+            android:text="CONTINUE" />
     </LinearLayout>
+
 </RelativeLayout>

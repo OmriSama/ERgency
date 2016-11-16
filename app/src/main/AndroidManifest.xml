@@ -25,7 +25,8 @@
         <activity android:name=".Insurance" />
         <activity android:name=".SkipScreen" />
         <activity android:name=".Allergies" />
-        <activity android:name=".Immunizations"></activity>
+        <activity android:name=".Immunizations" />
+        <activity android:name=".Confirmation"></activity>
     </application>
 
 </manifest>

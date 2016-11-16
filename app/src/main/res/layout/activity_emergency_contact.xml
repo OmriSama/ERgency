@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_emergency_contact"
     android:layout_width="match_parent"
@@ -10,45 +10,56 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team3.ergency.EmergencyContact">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/ec_full_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Contact Full Name*"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/ec_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Address*"
-            android:inputType="textPostalAddress" />
-
+    <RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
             <EditText
-                android:id="@+id/ec_city"
-                android:layout_width="wrap_content"
+                android:id="@+id/ec_full_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:hint="City*"
-                android:inputType="textCapSentences" />
+                android:hint="Contact Full Name*"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/ec_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Address*"
+                android:inputType="textPostalAddress" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ec_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="City*"
+                    android:inputType="textCapSentences" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/ec_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="State*" />
+
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/ec_zip_code"
@@ -59,30 +70,25 @@
                 android:hint="Zip Code*"
                 android:inputType="number" />
 
+            <EditText
+                android:id="@+id/ec_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Phone Number*"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/ec_save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="saveECInfo"
+                android:text="SAVE" />
         </LinearLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/ec_state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="State*" />
+    </RelativeLayout>
 
-        <EditText
-            android:id="@+id/ec_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Phone Number*"
-            android:inputType="phone" />
 
-        <Button
-            android:id="@+id/ec_continue_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:onClick="saveECInfo (EmergencyContact)"
-            android:text="CONTINUE" />
-    </LinearLayout>
-</RelativeLayout>
+</ScrollViewLayout>

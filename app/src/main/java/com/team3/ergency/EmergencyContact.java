@@ -27,7 +27,7 @@ public class EmergencyContact extends AppCompatActivity {
 
 
     //variable declaration
-    String filename = "EContactInformation.txt";
+    String fileName = "PatientInformation.txt";
     FileOutputStream fileOut;
     private ArrayList<String> unfilledForms;
     private EditText ecFullName;
@@ -49,7 +49,7 @@ public class EmergencyContact extends AppCompatActivity {
         setContentView(R.layout.activity_emergency_contact);
 
         //Changes CONTINUE button color
-        continueBt = (Button) findViewById(R.id.ec_continue_button);
+        continueBt = (Button) findViewById(R.id.ec_save_button);
         continueBt.setBackgroundColor(Color.RED);
         continueBt.setTextColor(Color.WHITE);
 
@@ -58,6 +58,7 @@ public class EmergencyContact extends AppCompatActivity {
         ecState = (AutoCompleteTextView) findViewById(R.id.ec_state);//**********//
         String[] statesAbbr = getResources().getStringArray(R.array.states_abbr);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, statesAbbr);
+
         //User must enter in at least one letter for the suggestions to appear
         ecState.setThreshold(1);
         ecState.setAdapter(adapter2);
@@ -73,8 +74,12 @@ public class EmergencyContact extends AppCompatActivity {
 
         unfilledForms = new ArrayList<String>();
 
-        // Create a new file in internal storage to store the patient information
-        fileOut = create_file(fileOut);
+        // Open PatientInformation.txt in internal storage to store the patient information
+        try {
+            fileOut = openFileOutput(fileName, MODE_APPEND);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //Get the text from each TextEdit, check if valid, and write to file
         ecFullName = (EditText) findViewById(R.id.ec_full_name);
@@ -139,15 +144,6 @@ public class EmergencyContact extends AppCompatActivity {
 
     }
 
-    // Create a new text file in internal storage
-    public FileOutputStream create_file(FileOutputStream fos) {
-        try {
-            fos = openFileOutput(filename, MODE_PRIVATE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return fos;
-    }
 
     // Close file
     public void closeFile(FileOutputStream fileOut) {

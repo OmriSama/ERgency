@@ -1,11 +1,13 @@
 package com.team3.ergency;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.R.attr.phoneNumber;
+import static android.provider.Telephony.Mms.Part.FILENAME;
 import static com.team3.ergency.R.id.address;
 import static com.team3.ergency.R.id.policy_holder_name;
 import static com.team3.ergency.R.id.state;
@@ -63,13 +66,12 @@ public class Insurance extends AppCompatActivity {
     }
 
     // Writes the patient's information to the Patient Information file
-    public void saveInfo(View view) {
-
+    public void saveInsuranceInfo(View view) {
         unfilledForms = new ArrayList<String>();
 
         // Open PatientInformation.txt in internal storage to store the patient information
         try {
-            fileOut = new FileOutputStream(fileName, true);
+            fileOut = openFileOutput(fileName, MODE_APPEND);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -145,7 +147,6 @@ public class Insurance extends AppCompatActivity {
         } else {
             unfilledForms.add("Phone Number");
         }
-
 
         //Close File
         closeFile(fileOut);

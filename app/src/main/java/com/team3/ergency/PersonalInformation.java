@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,6 +126,7 @@ public class PersonalInformation extends AppCompatActivity {
         } else {
             unfilledForms.add("First Name");
         }
+
 
         middleName = (EditText) findViewById(R.id.middle_name);
         userInput = middleName.getText().toString();
