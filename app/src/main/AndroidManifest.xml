@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<activity xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.team3.ergency">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,7 +37,8 @@
         <activity android:name=".Insurance" />
         <activity android:name=".SkipScreen" />
         <activity android:name=".Allergies" />
-        <activity android:name=".Immunizations"
+        <activity android:name=".Immunizations" />
+        <activity
             android:name=".HomepageActivity"
             android:label="ERgency">
         </activity>
@@ -53,6 +54,4 @@
         </activity>
         <activity android:name=".Medications" android:label="Medications"></activity>
     </application>
-
-
 </manifest>
