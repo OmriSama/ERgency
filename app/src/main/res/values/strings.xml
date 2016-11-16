@@ -14,7 +14,6 @@
     <string name="select_sex">sex</string>
     <string name="title_activity_emergency_contact">EmergencyContact</string>
 
-
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>

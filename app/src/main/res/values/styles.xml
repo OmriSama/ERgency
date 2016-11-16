@@ -12,6 +12,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <!-- Style for the images in the intro pages -->
     <style name="introImageView">
         <item name="android:layout_width">@dimen/intro_image_width</item>
