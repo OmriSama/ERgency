@@ -30,8 +30,8 @@
         </activity>
         <activity
             android:name=".PersonalInformation"
-            android:label="Personal Information"
             android:grantUriPermissions="true"
+            android:label="Personal Information"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".EmergencyContact"
@@ -57,7 +57,7 @@
             android:name=".Medications"
             android:label="Medications"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".SurgicalHistory"></activity>
+        <activity android:name=".SurgicalHistory" />
         <activity
             android:name=".Immunizations"
             android:label="Immunizations"
@@ -73,14 +73,15 @@
         </activity>
         <activity
             android:name=".LocationActivity"
-            android:label="Find Your Nearest Hospitals"/>
+            android:label="Find Your Nearest Hospitals" />
         <activity
             android:name=".QuickRegistrationActivity"
             android:label="Quick Registration"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Confirmation"
-            android:label="Confirmation"/>
+            android:label="Confirmation" />
+        <activity android:name=".CongratsActivity"></activity>
     </application>
 
 </manifest>

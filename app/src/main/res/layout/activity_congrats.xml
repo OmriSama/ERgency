@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_confirmation"
+    android:id="@+id/activity_congrats"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,14 +9,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:screenOrientation="portrait"
-    tools:context="com.team3.ergency.Confirmation">
+    tools:context="com.team3.ergency.CongratsActivity">
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:src="@drawable/ic_heart"/>
 
     <TextView
@@ -24,30 +23,9 @@
         android:layout_height="0dp"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Your profile has been submitted to:"
-        android:textAppearance="?android:textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/conf_hospital_information"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_weight="2"
         android:gravity="center_horizontal"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/color_primary_dark"
-        tools:hint="Hoag Hospital Irvine\n16200 Sand Canyon Ave, Irvine, CA, 92618\n(949) 764-4624"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_weight="3"
-        android:gravity="top"
-        android:text="When you arrive at the selected emergency provider, please take a seat until your name is called."
-        android:textAlignment="center"
-        android:textAppearance="?android:textAppearanceLarge" />
+        android:text="Congratulations! You have finished setting up your medical profile!"
+        android:textAppearance="?android:textAppearanceLarge"/>
 
     <Button
         android:layout_width="match_parent"
@@ -59,4 +37,5 @@
         android:onClick="goBack"
         android:text="Go Back"
         android:theme="@style/AppTheme.Button" />
+
 </LinearLayout>

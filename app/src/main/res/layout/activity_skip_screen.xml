@@ -20,20 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
+            android:layout_marginLeft="@dimen/edittext_margin"
+            android:layout_marginRight="@dimen/edittext_margin"
             android:fontFamily="sans-serif"
-            android:text="You may now choose to continue setting up your profile or continue later"
+            android:text="You may now choose to continue setting up your profile or continue later."
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textAppearance="?android:textAppearanceLarge" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:layout_marginLeft="@dimen/edittext_margin"
-            android:layout_marginRight="@dimen/edittext_margin"
-            android:layout_marginTop="@dimen/edittext_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="goToHomepage"
             android:text="Go to Homepage"
             android:theme="@style/AppTheme.Button" />
@@ -41,10 +41,10 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/edittext_margin"
-            android:layout_marginLeft="@dimen/edittext_margin"
-            android:layout_marginRight="@dimen/edittext_margin"
-            android:layout_marginTop="@dimen/edittext_margin"
+            android:layout_marginBottom="@dimen/primary_view_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="continueForms"
             android:text="Continue"
             android:theme="@style/AppTheme.Button" />
