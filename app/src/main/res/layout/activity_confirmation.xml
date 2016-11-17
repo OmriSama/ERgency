@@ -60,5 +60,4 @@
         android:onClick="goBack"
         android:text="Go Back"
         android:theme="@style/AppTheme.Button" />
-
 </LinearLayout>

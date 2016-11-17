@@ -42,4 +42,5 @@
             android:id="@+id/sh_next_bt"
             android:layout_marginTop="50dp" />
     </LinearLayout>
+
 </RelativeLayout>

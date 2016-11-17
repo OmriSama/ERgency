@@ -62,5 +62,4 @@
             android:text="Save"
             android:theme="@style/AppTheme.Button" />
     </LinearLayout>
-
 </ScrollView>
