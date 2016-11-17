@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
@@ -47,19 +47,22 @@
             <EditText
                 android:id="@+id/date_of_birth"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="3"
                 android:focusable="false"
+                android:gravity="center_vertical"
                 android:hint="Date of Birth*"
                 android:onClick="launch_date_picker" />
 
             <Spinner
                 android:id="@+id/sex"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:prompt="@string/select_sex"></Spinner>
 
         </LinearLayout>
@@ -76,23 +79,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/city"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:gravity="center_vertical"
                 android:hint="City*"
                 android:inputType="textCapSentences" />
 
             <AutoCompleteTextView
                 android:id="@+id/state"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="State" />
+                android:gravity="bottom"
+                android:hint="State*" />
 
         </LinearLayout>
 
@@ -111,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Phone Number*"
-            android:inputType="number" />
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/email_address"
@@ -122,12 +127,14 @@
             android:inputType="textEmailAddress" />
 
         <Button
-            android:layout_width="@dimen/save_button_width"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="@dimen/primary_view_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="saveInfo"
-            android:text="Save" />
+            android:text="Save"
+            android:theme="@style/AppTheme.Button" />
     </LinearLayout>
-
 </ScrollView>

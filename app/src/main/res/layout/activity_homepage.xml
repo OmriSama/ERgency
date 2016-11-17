@@ -4,15 +4,8 @@
     android:id="@+id/activity_homepage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.HomepageActivity">
-
-    <ImageView
-        android:id="@+id/background_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.15"
-        android:scaleType="centerCrop"
-        android:src="@drawable/homepage_background"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +23,7 @@
             android:layout_height="0dp"
             android:layout_weight="3"
             android:gravity="center"
-            android:src="@drawable/temp_logo"/>
+            android:src="@drawable/homepage_logo"/>
 
         <View
             android:layout_width="match_parent"
@@ -51,12 +44,12 @@
             android:textStyle="bold"/>
 
         <Button
-            android:onClick="findHospitals"
             android:id="@+id/go_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:onClick="findHospitals"
             android:padding="24dp"
             android:text="Emergency Providers"
             android:textSize="20sp"
@@ -82,4 +75,5 @@
                 android:textSize="16sp"/>
         </RelativeLayout>
     </LinearLayout>
+
 </RelativeLayout>

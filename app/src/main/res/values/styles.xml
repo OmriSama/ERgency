@@ -39,9 +39,12 @@
 
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">#F44336</item>
+        <item name="colorButtonNormal">@color/color_primary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">sans-serif-medium"</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

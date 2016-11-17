@@ -72,6 +72,5 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             tools:text="3.2 mi"/>
-
     </LinearLayout>
 </LinearLayout>

@@ -31,31 +31,57 @@
         <activity
             android:name=".PersonalInformation"
             android:grantUriPermissions="true"
+            android:label="Personal Information"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".EmergencyContact" />
-        <activity android:name=".Insurance" />
-        <activity android:name=".SkipScreen" />
-        <activity android:name=".Allergies" />
-        <activity android:name=".Immunizations" />
+        <activity
+            android:name=".EmergencyContact"
+            android:label="Emergency Contact"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Insurance"
+            android:label="Insurance"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".SkipScreen"
+            android:label="Skip"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Allergies"
+            android:label="Allergies"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".PhysicianInfo"
+            android:label="Physician Info"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Medications"
+            android:label="Medications"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".SurgicalHistory" />
+        <activity
+            android:name=".Immunizations"
+            android:label="Immunizations"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".HomepageActivity"
-            android:label="ERgency" />
+            android:label="ERgency">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LocationActivity"
             android:label="Find Your Nearest Hospitals" />
         <activity
             android:name=".QuickRegistrationActivity"
-            android:label="Quick Registration" />
+            android:label="Quick Registration"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Confirmation"
             android:label="Confirmation" />
-        <activity
-            android:name=".Medications"
-            android:label="Medications" />
-        <activity
-            android:name=".PhysicianInfo"
-            android:label="Physician Info" />
-        <activity android:name=".SurgicalHistory"></activity>
+        <activity android:name=".CongratsActivity"></activity>
     </application>
 
 </manifest>

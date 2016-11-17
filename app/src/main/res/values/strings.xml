@@ -10,6 +10,7 @@
     <string name="location_button_text">Use My Location</string>
     <string name="output_file_patient_information">PatientInformation.txt</string>
     <string name="output_file_hospital_information">HospitalInformation.txt</string>
+    <string name="output_file_quick_registration">QuickRegistration.txt</string>
     <string name="permissions_needed_location">Location access is required to automatically find your location.</string>
     <string name="select_sex">sex</string>
     <string name="title_activity_emergency_contact">EmergencyContact</string>

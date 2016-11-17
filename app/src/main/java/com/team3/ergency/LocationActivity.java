@@ -3,6 +3,7 @@ package com.team3.ergency;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -93,9 +95,14 @@ public class LocationActivity extends AppCompatActivity
     private GoogleMap mMap;
 
     /**
-     * SearchView, SearchResultsList, SearchResultsAdapters for the search bar
+     * SearchView for the location search bar
      */
     private FloatingSearchView mSearchView;
+
+    /**
+     * ProgressBar for loading up hospital search information
+     */
+    ProgressBar mProgressBar;
 
     @Override
     protected void onStart() {
@@ -117,6 +124,9 @@ public class LocationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+        // Set progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         // Create GoogleApiClient
         mGoogleApiClient = new GoogleApiClient
@@ -355,6 +365,8 @@ public class LocationActivity extends AppCompatActivity
     }
 
     private void findNearbyHospitals(String query) {
+        mProgressBar.setVisibility(View.VISIBLE);
+
         FloatingActionButton locationButton = (FloatingActionButton) findViewById(
                 R.id.request_location_button);
         animateY(locationButton, 2, 200);
@@ -484,6 +496,8 @@ public class LocationActivity extends AppCompatActivity
         final ListView hospitalListView = (ListView) findViewById(hospital_list_view);
         hospitalListView.setAdapter(adapter);
 
+        mProgressBar.setVisibility(View.GONE);
+
         setMap(true);
 
         animateY(hospitalListView, -1, 500);
@@ -512,6 +526,8 @@ public class LocationActivity extends AppCompatActivity
                 catch (Exception e) {
                     Log.d(TAG, e.toString());
                 }
+
+                goToNextActivity();
             }
         });
     }
@@ -549,5 +565,14 @@ public class LocationActivity extends AppCompatActivity
                 View.TRANSLATION_Y, 0, distance * view.getHeight());
         anim.setDuration(duration);
         anim.start();
+    }
+
+    /**
+     * Go to next activity
+     */
+    private void goToNextActivity() {
+        Intent locationIntent = new Intent(this, QuickRegistrationActivity.class);
+        startActivity(locationIntent);
+        finish();
     }
 }

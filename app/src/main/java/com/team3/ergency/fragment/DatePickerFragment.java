@@ -1,4 +1,4 @@
-package com.team3.ergency;
+package com.team3.ergency.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -7,6 +7,8 @@ import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.team3.ergency.R;
 
 import java.util.Calendar;
 
@@ -31,6 +33,6 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText editTextView = (EditText) getActivity().findViewById(R.id.date_of_birth);
-        editTextView.setText(month + "/" + day + "/" + year);
+        editTextView.setText(month+1 + "/" + day + "/" + year);
     }
 }

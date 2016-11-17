@@ -28,15 +28,9 @@ public class Allergies extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Allergies");
         setContentView(R.layout.activity_allergies);
-
-        //Changes CONTINUE button color
-        continueBt = (Button) findViewById(R.id.allergies_continue);
-        continueBt.setBackgroundColor(Color.RED);
-        continueBt.setTextColor(Color.WHITE);
-
     }
 
-    public void saveInsuranceInfo(View view) {
+    public void saveInfo(View view) {
 
         // Open the existing PatientInfo.txt file
         try {
