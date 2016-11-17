@@ -129,10 +129,10 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/edittext_margin"
-            android:layout_marginLeft="@dimen/edittext_margin"
-            android:layout_marginRight="@dimen/edittext_margin"
-            android:layout_marginTop="@dimen/edittext_margin"
+            android:layout_marginBottom="@dimen/primary_view_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="saveInfo"
             android:text="Save"
             android:theme="@style/AppTheme.Button" />

@@ -39,8 +39,8 @@
         android:layout_marginLeft="@dimen/primary_view_margin"
         android:layout_marginRight="@dimen/primary_view_margin"
         android:layout_marginTop="@dimen/primary_view_margin"
-        android:onClick="goBack"
-        android:text="Go Back"
+        android:onClick="goToHomepage"
+        android:text="Go to Hompage"
         android:theme="@style/AppTheme.Button" />
 
     <View

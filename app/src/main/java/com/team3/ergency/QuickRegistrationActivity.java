@@ -61,7 +61,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         });
     }
 
-    public void saveInfo(View view) {
+    public void sendInfo(View view) {
         unfilledForms = new ArrayList<>();
 
         // Create a new file in internal storage to store the patient information
