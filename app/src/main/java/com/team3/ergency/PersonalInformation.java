@@ -1,55 +1,24 @@
 package com.team3.ergency;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import static android.R.attr.name;
-import static android.R.attr.path;
-import static android.R.attr.start;
-import static android.R.id.edit;
-import static android.R.id.input;
-import static android.content.Context.MODE_PRIVATE;
-import static android.os.Build.VERSION_CODES.M;
-import static com.team3.ergency.R.id.date_of_birth;
-import static com.team3.ergency.R.id.first_name;
 
 import android.app.AlertDialog;
-import android.widget.Button;
-import android.widget.Toast;
+
+import com.team3.ergency.fragment.DatePickerFragment;
 
 public class PersonalInformation extends AppCompatActivity {
 
@@ -273,8 +242,6 @@ public class PersonalInformation extends AppCompatActivity {
         AlertDialog errorDialog = builder.create();
         errorDialog.show();
     }
-
-
 }
 
 

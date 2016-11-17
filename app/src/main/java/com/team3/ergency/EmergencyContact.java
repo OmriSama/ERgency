@@ -48,11 +48,6 @@ public class EmergencyContact extends AppCompatActivity {
         getSupportActionBar().setTitle("Emergency Contact");
         setContentView(R.layout.activity_emergency_contact);
 
-        //Changes CONTINUE button color
-        continueBt = (Button) findViewById(R.id.ec_save_button);
-        continueBt.setBackgroundColor(Color.RED);
-        continueBt.setTextColor(Color.WHITE);
-
         // Set the state text view so that when the user types in one word, a list of
         // suggestions appear
         ecState = (AutoCompleteTextView) findViewById(R.id.ec_state);//**********//
@@ -70,7 +65,7 @@ public class EmergencyContact extends AppCompatActivity {
     }
 
     // Writes the patient's information to the Patient Information file
-    public void saveECInfo(View view) {
+    public void saveInfo(View view) {
 
         unfilledForms = new ArrayList<String>();
 

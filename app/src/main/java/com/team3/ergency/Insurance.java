@@ -66,7 +66,7 @@ public class Insurance extends AppCompatActivity {
     }
 
     // Writes the patient's information to the Patient Information file
-    public void saveInsuranceInfo(View view) {
+    public void saveInfo(View view) {
         unfilledForms = new ArrayList<String>();
 
         // Open PatientInformation.txt in internal storage to store the patient information
