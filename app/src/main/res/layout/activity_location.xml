@@ -8,6 +8,7 @@
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.LocationActivity">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,8 +35,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        android:orientation="vertical"
-        android:elevation="6dp" />
+        android:elevation="6dp"
+        android:orientation="vertical" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/request_location_button"
@@ -47,8 +48,17 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:onClick="requestLocation"
-        android:src="@drawable/ic_gps_fixed_black_24dp"
-        app:backgroundTint="@android:color/white"
+        android:src="@drawable/ic_local_hospital_white_24dp"
+        app:backgroundTint="@color/color_primary"
         app:elevation="6dp"
         app:fabSize="normal" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:progressDrawable="@drawable/circular_progress_view"
+        android:visibility="gone"/>
 </RelativeLayout>

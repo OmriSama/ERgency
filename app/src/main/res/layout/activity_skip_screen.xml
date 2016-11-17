@@ -30,19 +30,24 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40sp"
-            android:background="@android:color/holo_red_light"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="@dimen/edittext_margin"
+            android:layout_marginRight="@dimen/edittext_margin"
+            android:layout_marginTop="@dimen/edittext_margin"
             android:onClick="goToHomepage"
             android:text="Go to Homepage"
-            android:textAllCaps="true" />
+            android:theme="@style/AppTheme.Button" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
+            android:layout_marginBottom="@dimen/edittext_margin"
+            android:layout_marginLeft="@dimen/edittext_margin"
+            android:layout_marginRight="@dimen/edittext_margin"
+            android:layout_marginTop="@dimen/edittext_margin"
             android:onClick="continueForms"
             android:text="Continue"
-            android:textAllCaps="true" />
+            android:theme="@style/AppTheme.Button" />
 
     </LinearLayout>
 
