@@ -91,9 +91,9 @@ public class Hospital {
     }
 
     public String toString() {
-        return "Name: " + mName +
-               "\nAddress: " + mAddress + ", " + mArea +
-               "\nPhone: " + mPhone;
+        return mName +
+                "\n" + mAddress + ", " + mArea +
+                "\n" + mPhone;
     }
 
     private void parsePhone(String phone) {
