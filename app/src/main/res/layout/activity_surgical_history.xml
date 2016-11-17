@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_surgical_history"
     android:layout_width="match_parent"
@@ -10,36 +10,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team3.ergency.SurgicalHistory">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="wrap_content">
 
-        <EditText
+        <LinearLayout
+            android:id="@+id/sh_surgery_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/sh_surgery"
-            android:hint="Surgery"
-            android:layout_margin="5dp" />
+            android:orientation="vertical">
 
-        <EditText
+            <EditText
+                android:id="@+id/sh_surgery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Surgery"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/sh_date_of_surgery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sh_surgery"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Date of Surgery"
+                android:onClick="launch_date_picker" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/sh_date_of_surgery"
-            android:hint="Date of Surgery"
-            android:layout_margin="5dp" />
+            android:layout_below="@+id/sh_surgery_info"
+            android:orientation="vertical">
 
-        <Button
-            android:text="NEXT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sh_next_bt"
-            android:layout_marginTop="50dp" />
-    </LinearLayout>
-</RelativeLayout>
+            <Button
+                android:id="@+id/sh_add_more"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="addMore"
+                android:text="+ Add More" />
+
+            <Button
+                android:id="@+id/sh_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="SAVE" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
