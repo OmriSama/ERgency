@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.team3.ergency.fragment.DatePickerFragment;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -114,7 +112,7 @@ public class ChronicConditions extends AppCompatActivity {
             }
         }
 
-        if (requireDate == false) {
+        if (!requireDate) {
             Intent intent = new Intent(this, SurgicalHistory.class);
             startActivity(intent);
             finish();

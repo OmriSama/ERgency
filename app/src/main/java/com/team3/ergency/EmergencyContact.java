@@ -3,19 +3,13 @@ package com.team3.ergency;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,23 +30,19 @@ public class EmergencyContact extends AppCompatActivity {
     private AutoCompleteTextView ecState;
     private EditText ecZipCode;
     private EditText ecPhoneNumber;
-    private Button continueBt;
-
     private String userInput;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Emergency Contact");
         setContentView(R.layout.activity_emergency_contact);
 
         // Set the state text view so that when the user types in one word, a list of
         // suggestions appear
         ecState = (AutoCompleteTextView) findViewById(R.id.ec_state);//**********//
         String[] statesAbbr = getResources().getStringArray(R.array.states_abbr);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, statesAbbr);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, statesAbbr);
 
         //User must enter in at least one letter for the suggestions to appear
         ecState.setThreshold(1);
@@ -67,7 +57,7 @@ public class EmergencyContact extends AppCompatActivity {
     // Writes the patient's information to the Patient Information file
     public void saveInfo(View view) {
 
-        unfilledForms = new ArrayList<String>();
+        unfilledForms = new ArrayList<>();
 
         // Open PatientInformation.txt in internal storage to store the patient information
         try {

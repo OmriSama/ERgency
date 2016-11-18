@@ -21,14 +21,14 @@ import static android.text.TextUtils.split;
 
 public class Hospital {
     private String mPlaceId;
-    private String mName;
+    private String mName = "";
     private String mAddress = "";
     private String mArea = "";
     private String mPhone = "";
     private double mLat;
     private double mLng;
-    private String mDistance;
-    private String mDuration;
+    private String mDistance = "";
+    private String mDuration = "";
     private boolean mFinishedProcessing = false;
 
     public Hospital(String placeId, String distance, String duration, GoogleApiClient googleApiClient) {

@@ -17,7 +17,7 @@ import static android.R.attr.apiKey;
 
 
 public class HospitalSearchHelper {
-    public static final String TAG = "HospitalSearchHelper";
+    private static final String TAG = "HospitalSearchHelper";
 
     public static String generateNearbySearchUrl(String apiKey, String query, double lat, double lng) {
         final int RADIUS = 10 * 1609;

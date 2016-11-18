@@ -23,7 +23,6 @@ public class Confirmation extends AppCompatActivity {
     private void displayHospital(TextView view) {
         String hospitalInfo = FileUtils.readFromFile(this, getResources().getString(
                 R.string.output_file_hospital_information));
-
         view.setText(hospitalInfo);
     }
 

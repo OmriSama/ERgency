@@ -45,8 +45,6 @@ public class PersonalInformation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getSupportActionBar().setTitle("Personal Information");
         setContentView(R.layout.activity_personal_information);
 
 
@@ -61,7 +59,7 @@ public class PersonalInformation extends AppCompatActivity {
         // suggestions appear
         state = (AutoCompleteTextView) findViewById(R.id.state);
         String[] statesAbbr = getResources().getStringArray(R.array.states_abbr);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, statesAbbr);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, statesAbbr);
         //User must enter in at least one letter for the suggestions to appear
         state.setThreshold(1);
         state.setAdapter(adapter2);
@@ -82,7 +80,7 @@ public class PersonalInformation extends AppCompatActivity {
     // Writes the patient's information to the Patient Information file
     public void saveInfo(View view) {
 
-        unfilledForms = new ArrayList<String>();
+        unfilledForms = new ArrayList<>();
 
         // Create a new file in internal storage to store the patient information
         fileOut = create_file(fileOut);

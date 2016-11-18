@@ -16,7 +16,6 @@ public class Allergies extends AppCompatActivity {
 
     FileOutputStream fileOut;
     String fileName = "PatientInformation.txt";
-    Button continueBt;
     private EditText medicationAllergies;
     private EditText environmentalAllergies;
     private EditText foodAllergies;
@@ -26,7 +25,6 @@ public class Allergies extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Allergies");
         setContentView(R.layout.activity_allergies);
     }
 

@@ -25,7 +25,6 @@ public class Immunizations extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Immunizations");
         setContentView(R.layout.activity_immunizations);
     }
 
@@ -38,11 +37,11 @@ public class Immunizations extends AppCompatActivity {
     public void saveInfo(View view) {
         unfilledForms = new ArrayList<>();
 
-        dateOfFluVac = (EditText) findViewById(R.id.date_of_birth);
-        checkAndSaveField(dateOfFluVac, "Date of Flu Vaccination");
+        dateOfFluVac = (EditText) findViewById(R.id.flu_date_immunization);
+        saveField(dateOfFluVac, "Date of Flu Vaccination");
 
-        dateOfTdapVac = (EditText) findViewById(R.id.date_of_birth);
-        checkAndSaveField(dateOfTdapVac, "Date of Tdap Vaccination");
+        dateOfTdapVac = (EditText) findViewById(R.id.tdap_date_immunization);
+        saveField(dateOfTdapVac, "Date of Tdap Vaccination");
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
@@ -55,21 +54,11 @@ public class Immunizations extends AppCompatActivity {
         }
     }
 
-    public void checkField(EditText editText, String label) {
+    //Write edit text field to file
+    public void saveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
             FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
-        }
-    }
-
-    //Write edit text field to file or display error if not filled
-    public void checkAndSaveField(EditText editText, String label) {
-        String userInput = editText.getText().toString();
-        if (userInput.length() > 0) {
-            FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
-        }
-        else {
-            unfilledForms.add(label);
         }
     }
 

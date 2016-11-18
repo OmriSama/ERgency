@@ -109,7 +109,7 @@ public class SurgicalHistory extends AppCompatActivity {
             }
         }
 
-        if (requireDate == false) {
+        if (!requireDate) {
             Intent intent = new Intent(this, Immunizations.class);
             startActivity(intent);
             finish();

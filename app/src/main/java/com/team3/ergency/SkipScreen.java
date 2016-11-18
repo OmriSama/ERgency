@@ -20,8 +20,8 @@ public class SkipScreen extends AppCompatActivity {
     }
 
     public void continueForms(View view) {
-        Intent continuefilling = new Intent(this, PhysicianInfo.class);
-        startActivity(continuefilling);
+        Intent continueFilling = new Intent(this, PhysicianInfo.class);
+        startActivity(continueFilling);
         finish();
     }
 }

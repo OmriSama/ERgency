@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.team3.ergency.R;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by knnguy on 11/13/16.
@@ -27,8 +25,7 @@ public class DatePickerFragment extends DialogFragment
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        Dialog date_picker = new DatePickerDialog(getActivity(), this, year, month, day);
-        return date_picker;
+        return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {

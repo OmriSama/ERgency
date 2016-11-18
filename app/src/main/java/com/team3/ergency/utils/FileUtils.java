@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static android.R.id.input;
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by howard on 11/17/16.
  */
@@ -55,7 +52,8 @@ public class FileUtils {
                 StringBuilder stringBuilder = new StringBuilder();
 
                 while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString + "\n");
+                    receiveString += "\n";
+                    stringBuilder.append(receiveString);
                 }
 
                 inputStream.close();

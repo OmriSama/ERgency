@@ -45,7 +45,8 @@ public class QuickRegistrationActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
-                painScaleTextView.setText(""+(progress+1));
+                String progressStr = "" + (progress+1);
+                painScaleTextView.setText(progressStr);
             }
 
             @Override

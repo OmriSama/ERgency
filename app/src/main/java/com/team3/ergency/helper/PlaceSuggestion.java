@@ -12,7 +12,6 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 public class PlaceSuggestion implements SearchSuggestion {
     private PlaceWrapper mPlaceWrapper;
     private String mPlaceName;
-    private boolean mIsHistory = false;
 
     public PlaceSuggestion(PlaceWrapper suggestion) {
         mPlaceWrapper = suggestion;
@@ -21,19 +20,10 @@ public class PlaceSuggestion implements SearchSuggestion {
 
     public PlaceSuggestion(Parcel source) {
         mPlaceWrapper = source.readParcelable(PlaceWrapper.class.getClassLoader());
-        mIsHistory = source.readInt() != 0;
-    }
-
-    public void setIsHistory(boolean isHistory) {
-        isHistory = isHistory;
     }
 
     public PlaceWrapper getPlaceWrapper() {
         return mPlaceWrapper;
-    }
-
-    public boolean getIsHistory() {
-        return mIsHistory;
     }
 
     @Override
@@ -61,6 +51,5 @@ public class PlaceSuggestion implements SearchSuggestion {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mPlaceName);
-        dest.writeInt(mIsHistory ? 1 : 0);
     }
 }
