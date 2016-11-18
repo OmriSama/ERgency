@@ -12,16 +12,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <Button
+        android:id="@+id/join_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="@string/join_now_button"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white" />
+
     <LinearLayout
         android:id="@+id/dots"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="24dp"
         android:gravity="center"
         android:orientation="horizontal">
-
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/arrow_next"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/ic_keyboard_arrow_right_white_24dp" />
 
     <View
         android:layout_width="match_parent"
@@ -30,30 +58,4 @@
         android:alpha=".5"
         android:background="@android:color/white" />
 
-    <Button
-        android:id="@+id/join_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:text="@string/join_now_button"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white" />
-
-    <ImageButton
-        android:id="@+id/arrow_next"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@mipmap/ic_arrow_forward_white_24dp" />
 </RelativeLayout>
