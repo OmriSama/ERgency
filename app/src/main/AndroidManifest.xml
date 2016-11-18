@@ -60,19 +60,19 @@
         <activity
             android:name=".ChronicConditions"
             android:label="Chronic Conditions"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SurgicalHistory"
             android:label="Surgical History"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Immunizations"
             android:label="Immunizations"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".CongratsActivity"
-            android:label="Congratulations" />
+            android:label="Congratulations"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".HomepageActivity"
             android:label="ERgency"
@@ -80,7 +80,7 @@
         <activity
             android:name=".LocationActivity"
             android:label="Find Your Nearest Hospitals"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".QuickRegistrationActivity"
             android:label="Quick Registration"
@@ -88,7 +88,7 @@
         <activity
             android:name=".Confirmation"
             android:label="Confirmation"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
