@@ -5,18 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.team3.ergency.helper.FileHelper;
+import com.team3.ergency.utils.FileUtils;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuickRegistrationActivity extends AppCompatActivity {
@@ -65,7 +61,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         unfilledForms = new ArrayList<>();
 
         // Create a new file in internal storage to store the patient information
-        fileOut = FileHelper.createFileOutputStream(this,
+        fileOut = FileUtils.createFileOutputStream(this,
                 getResources().getString(R.string.output_file_quick_registration),
                 MODE_PRIVATE);
 
@@ -82,7 +78,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         associatedSymptoms = (EditText) findViewById(R.id.qr_associated_symptoms_edittext);
         saveField(associatedSymptoms, "Associated Symptoms");
 
-        FileHelper.closeFileOutputStream(fileOut);
+        FileUtils.closeFileOutputStream(fileOut);
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
@@ -99,7 +95,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
     public void checkAndSaveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
-            FileHelper.writeToFile(fileOut, label + ": " + userInput + "\n");
+            FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
         }
         else {
             unfilledForms.add(label);
@@ -110,7 +106,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
     public void saveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
-            FileHelper.writeToFile(fileOut, label + ": " + userInput + "\n");
+            FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
         }
     }
 

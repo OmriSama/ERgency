@@ -43,10 +43,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.team3.ergency.adapter.HospitalListAdapter;
-import com.team3.ergency.helper.DistanceMatrixResponse;
+import com.team3.ergency.gson.DistanceMatrixResponse;
 import com.team3.ergency.helper.Hospital;
 import com.team3.ergency.helper.HospitalSearchHelper;
-import com.team3.ergency.helper.NearbySearchResponse;
+import com.team3.ergency.gson.NearbySearchResponse;
 import com.team3.ergency.helper.PlaceWrapper;
 import com.team3.ergency.helper.PlaceSuggestion;
 

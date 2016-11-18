@@ -1,18 +1,14 @@
 package com.team3.ergency;
 
-import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.team3.ergency.fragment.DatePickerFragment;
@@ -22,37 +18,41 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static android.R.attr.id;
-
 public class SurgicalHistory extends AppCompatActivity {
 
-    ArrayList<EditText> surgeries;
-    ArrayList<EditText> surgeryDates;
-    FileOutputStream fileOut;
-    String fileName = "PatientInformation.txt";
-    Button shNextBt;
-    private EditText surgery;
-    private EditText surgeryDate;
+    private ArrayList<EditText> surgeryList;
+    private ArrayList<EditText> surgeryDateList;
+
+    private FileOutputStream fileOut;
+    private String fileName = "PatientInformation.txt";
+
+    private EditText surgeryEditText;
+    private EditText surgeryDateEditText;
     private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Surgical History");
         setContentView(R.layout.activity_surgical_history);
 
-        surgery = (EditText) findViewById(R.id.sh_surgery);
-        surgeryDate = (EditText) findViewById(R.id.sh_surgery);
+        // Setup View and Layout variables
+        surgeryEditText = (EditText) findViewById(R.id.sh_surgery);
+        surgeryDateEditText = (EditText) findViewById(R.id.sh_date_of_surgery);
         linearLayout = (LinearLayout) findViewById(R.id.sh_surgery_info);
 
-        surgeries = new ArrayList<EditText>();
-        surgeryDates = new ArrayList<EditText>();
-
-        surgeries.add(surgery);
-        surgeryDates.add(surgeryDate);
+        // Initialize surgery and surgery date lists with first EditText
+        surgeryList = new ArrayList<EditText>() {{
+            add(surgeryEditText);
+        }};
+        surgeryDateList = new ArrayList<EditText>() {{
+            add(surgeryDateEditText);
+        }};
     }
 
     public void launch_date_picker(View view) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
         DatePickerFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
@@ -71,7 +71,7 @@ public class SurgicalHistory extends AppCompatActivity {
         newSurgery.setInputType(InputType.TYPE_CLASS_TEXT);
         newSurgery.setLayoutParams(surgeryLayout);
 
-        surgeries.add(newSurgery);
+        surgeryList.add(newSurgery);
         linearLayout.addView(newSurgery);
 
         // Create the layout for the surgery date
@@ -92,8 +92,8 @@ public class SurgicalHistory extends AppCompatActivity {
         });
         newSurgeryDate.setLayoutParams(dateLayout);
 
-
-        surgeryDates.add(newSurgeryDate);
+        // Add EditTexts to ArrayList
+        surgeryDateList.add(newSurgeryDate);
         linearLayout.addView(newSurgeryDate);
     }
 
@@ -106,15 +106,15 @@ public class SurgicalHistory extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < surgeries.size(); i++) {
-            String surgeryInput = surgeries.get(i).getText().toString();
+        for (int i = 0; i < surgeryList.size(); i++) {
+            String surgeryInput = surgeryList.get(i).getText().toString();
             if (surgeryInput.length() < 0) {
                 break;
             } else {
                 writeToFile("Surgery: " + surgeryInput + "\n");
             }
 
-            surgeryInput = surgeryDates.get(i).getText().toString();
+            surgeryInput = surgeryDateList.get(i).getText().toString();
             if (surgeryInput.length() < 0) {
                 Toast.makeText(getApplicationContext(), "Please fill in the surgery date", Toast.LENGTH_LONG).show();
             } else {

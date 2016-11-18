@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.team3.ergency.fragment.DatePickerFragment;
-import com.team3.ergency.helper.FileHelper;
+import com.team3.ergency.utils.FileUtils;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class Immunizations extends AppCompatActivity {
     public void checkField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
-            FileHelper.writeToFile(fileOut, label + ": " + userInput + "\n");
+            FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
         }
     }
 
@@ -66,7 +66,7 @@ public class Immunizations extends AppCompatActivity {
     public void checkAndSaveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
-            FileHelper.writeToFile(fileOut, label + ": " + userInput + "\n");
+            FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
         }
         else {
             unfilledForms.add(label);
