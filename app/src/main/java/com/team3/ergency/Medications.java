@@ -88,7 +88,6 @@ public class Medications extends AppCompatActivity {
         Intent intent = new Intent(this, ChronicConditions.class);
         startActivity(intent);
         finish();
-
     }
 
     // Write information to the file
