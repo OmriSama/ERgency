@@ -112,7 +112,7 @@ public class ChronicConditions extends AppCompatActivity {
             }
         }
 
-        Intent intent = new Intent(this, Immunizations.class);
+        Intent intent = new Intent(this, SurgicalHistory.class);
         startActivity(intent);
         finish();
     }
