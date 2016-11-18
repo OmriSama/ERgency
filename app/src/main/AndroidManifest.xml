@@ -60,7 +60,6 @@
         <activity
             android:name=".SurgicalHistory"
             android:label="Surgical History">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,11 +72,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".CongratsActivity"
-            android:label="Congratulations"/>
+            android:label="Congratulations" />
         <activity
             android:name=".HomepageActivity"
-            android:label="ERgency">
-        </activity>
+            android:label="ERgency"></activity>
         <activity
             android:name=".LocationActivity"
             android:label="Find Your Nearest Hospitals" />
@@ -88,6 +86,7 @@
         <activity
             android:name=".Confirmation"
             android:label="Confirmation" />
+        <activity android:name=".ChronicConditions"></activity>
     </application>
 
 </manifest>
