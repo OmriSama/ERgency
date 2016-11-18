@@ -16,8 +16,10 @@
 
     <ImageView
         style="@style/introImageView"
-        android:layout_weight="0.5"
-        android:src="@mipmap/ic_assignment_black_48dp" />
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:tint="#4A148C"
+        android:src="@drawable/ic_assignment_24dp" />
 
     <TextView
         style="@style/introDescriptionTextView"

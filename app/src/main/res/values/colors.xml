@@ -2,10 +2,10 @@
 <resources>
     <color name="color_primary">#DB4437</color>
     <color name="color_primary_dark">#B71C1C</color>
-    <color name="color_accent">#1976D2</color>
+    <color name="color_accent">#00ACC1</color>
 
-    <color name="intro_screen_one">#7E57C2</color>
-    <color name="intro_screen_two">#FF7043</color>
+    <color name="intro_screen_one">#8E24AA</color>
+    <color name="intro_screen_two">#E53935</color>
     <color name="intro_screen_three">#26C6DA</color>
 
     <color name="intro_text_color">@android:color/white</color>
