@@ -20,7 +20,7 @@ public class HospitalSearchHelper {
     private static final String TAG = "HospitalSearchHelper";
 
     public static String generateNearbySearchUrl(String apiKey, String query, double lat, double lng) {
-        final int RADIUS = 10 * 1609;
+        final int RADIUS = 5 * 1609;
         final String RANK_BY = "distance";
         final String SEARCH_TYPE = "hospital";
 
