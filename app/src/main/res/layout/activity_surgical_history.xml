@@ -10,9 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team3.ergency.SurgicalHistory">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/sh_surgery_info"
@@ -24,7 +25,7 @@
                 android:id="@+id/sh_surgery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/primary_view_margin"
                 android:ems="10"
                 android:hint="Surgery"
                 android:inputType="text" />
@@ -33,40 +34,32 @@
                 android:id="@+id/sh_date_of_surgery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sh_surgery"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/primary_view_margin"
                 android:ems="10"
                 android:focusable="false"
                 android:hint="Date of Surgery"
-                android:onClick="launch_date_picker" />
+                android:onClick="launch_date_picker"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/sh_add_more"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sh_surgery_info"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/primary_view_margin"
+            android:onClick="addMore"
+            android:text="+ Add More" />
 
-            <Button
-                android:id="@+id/sh_add_more"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:onClick="addMore"
-                android:text="+ Add More" />
-
-            <Button
-                android:id="@+id/sh_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="SAVE" />
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/primary_view_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
+            android:onClick="saveInfo"
+            android:text="Save"
+            android:theme="@style/AppTheme.Button" />
+    </LinearLayout>
 </ScrollView>

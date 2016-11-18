@@ -57,19 +57,26 @@
             android:name=".Medications"
             android:label="Medications"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".SurgicalHistory" />
         <activity
-            android:name=".Immunizations"
-            android:label="Immunizations"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".HomepageActivity"
-            android:label="ERgency">
+            android:name=".SurgicalHistory"
+            android:label="Surgical History">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Immunizations"
+            android:label="Immunizations"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".CongratsActivity"
+            android:label="Congratulations"/>
+        <activity
+            android:name=".HomepageActivity"
+            android:label="ERgency">
         </activity>
         <activity
             android:name=".LocationActivity"
@@ -81,7 +88,6 @@
         <activity
             android:name=".Confirmation"
             android:label="Confirmation" />
-        <activity android:name=".CongratsActivity"></activity>
     </application>
 
 </manifest>

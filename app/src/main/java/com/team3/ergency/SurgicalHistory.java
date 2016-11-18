@@ -2,10 +2,12 @@ package com.team3.ergency;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +43,7 @@ public class SurgicalHistory extends AppCompatActivity {
 
         surgery = (EditText) findViewById(R.id.sh_surgery);
         surgeryDate = (EditText) findViewById(R.id.sh_surgery);
+        linearLayout = (LinearLayout) findViewById(R.id.sh_surgery_info);
 
         surgeries = new ArrayList<EditText>();
         surgeryDates = new ArrayList<EditText>();
@@ -50,15 +53,17 @@ public class SurgicalHistory extends AppCompatActivity {
     }
 
     public void launch_date_picker(View view) {
-        DatePickerFragment date_picker = new DatePickerFragment();
-        date_picker.show(getSupportFragmentManager(), "datePicker");
+        DatePickerFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void addMore() {
+    public void addMore(View view) {
+        final int margin_dp = (int) getResources().getDimension(R.dimen.primary_view_margin);
+
         // Create the layout for the surgery EditText
-        linearLayout = (LinearLayout) findViewById(R.id.sh_surgery_info);
-        LinearLayout.LayoutParams surgeryLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        surgeryLayout.setMargins(5, 5, 5, 5);
+        LinearLayout.LayoutParams surgeryLayout = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        surgeryLayout.setMargins(margin_dp, margin_dp, margin_dp, margin_dp);
 
         // Create a new EditText for the surgery name
         EditText newSurgery = new EditText(this);
@@ -67,20 +72,29 @@ public class SurgicalHistory extends AppCompatActivity {
         newSurgery.setLayoutParams(surgeryLayout);
 
         surgeries.add(newSurgery);
+        linearLayout.addView(newSurgery);
 
         // Create the layout for the surgery date
-        linearLayout = (LinearLayout) findViewById(R.id.sh_surgery_info);
-        LinearLayout.LayoutParams dateLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dateLayout.setMargins(5, 5, 5, 5);
+        LinearLayout.LayoutParams dateLayout = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dateLayout.setMargins(margin_dp, margin_dp, margin_dp, margin_dp);
 
-
-        // Create a new EditText for the surgery date
+        // Create a new EditText for the surgery name
         EditText newSurgeryDate = new EditText(this);
-        newSurgery.setHint("Date of Surgey");
-        newSurgery.setInputType(InputType.TYPE_CLASS_TEXT);
-        newSurgery.setLayoutParams(dateLayout);
+        newSurgeryDate.setHint("Date of Surgery");
+        newSurgeryDate.setFocusable(false);
+        newSurgeryDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment date_picker = new DatePickerFragment();
+                date_picker.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+        newSurgeryDate.setLayoutParams(dateLayout);
+
 
         surgeryDates.add(newSurgeryDate);
+        linearLayout.addView(newSurgeryDate);
     }
 
     public void saveSurgeryInfo() {
