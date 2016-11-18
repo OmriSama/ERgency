@@ -58,8 +58,13 @@
             android:label="Medications"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".ChronicConditions"
+            android:label="Chronic Conditions"/>
+        <activity
             android:name=".SurgicalHistory"
-            android:label="Surgical History">
+            android:label="Surgical History"
+            android:windowSoftInputMode="stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,18 +80,20 @@
             android:label="Congratulations" />
         <activity
             android:name=".HomepageActivity"
-            android:label="ERgency"></activity>
+            android:label="ERgency"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LocationActivity"
-            android:label="Find Your Nearest Hospitals" />
+            android:label="Find Your Nearest Hospitals"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".QuickRegistrationActivity"
             android:label="Quick Registration"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Confirmation"
-            android:label="Confirmation" />
-        <activity android:name=".ChronicConditions"></activity>
+            android:label="Confirmation"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
