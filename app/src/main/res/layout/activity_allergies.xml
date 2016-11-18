@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.Allergies">
 
     <LinearLayout
@@ -19,37 +20,37 @@
             android:id="@+id/medication_allergies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:ems="10"
-            android:hint="List medication allergies*"
-            android:inputType="textPersonName" />
+            android:hint="List medication allergies"
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/envoronmental_allergies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:ems="10"
-            android:hint="List environmental allergies*"
-            android:inputType="textPersonName" />
+            android:hint="List environmental allergies"
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/food_allergies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:ems="10"
-            android:hint="List food allergies*"
-            android:inputType="textPersonName" />
+            android:hint="List food allergies"
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/other_allergies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:ems="10"
             android:hint="List any other allergies"
-            android:inputType="textPersonName" />
+            android:inputType="textCapWords" />
 
         <Button
             android:layout_width="match_parent"

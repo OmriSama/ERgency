@@ -1,11 +1,13 @@
 package com.team3.ergency;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -72,6 +74,9 @@ public class PersonalInformation extends AppCompatActivity {
 
     // Date of Birth selection
     public void launch_date_picker(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+
         DatePickerFragment date_picker = new DatePickerFragment();
         date_picker.show(getSupportFragmentManager(), "datePicker");
     }

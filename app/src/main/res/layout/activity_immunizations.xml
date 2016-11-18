@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.Immunizations">
 
     <LinearLayout
@@ -35,8 +36,7 @@
             android:layout_marginRight="@dimen/primary_view_margin"
             android:ems="10"
             android:hint="Date of Immunization"
-            android:inputType="textPersonName"
-            android:onClick="launch_date_picker" />
+            android:inputType="datetime" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,8 +55,7 @@
             android:layout_margin="@dimen/primary_view_margin"
             android:ems="10"
             android:hint="Date of Immunization"
-            android:inputType="textPersonName"
-            android:onClick="launch_date_picker" />
+            android:inputType="datetime" />
 
         <Button
             android:layout_width="match_parent"

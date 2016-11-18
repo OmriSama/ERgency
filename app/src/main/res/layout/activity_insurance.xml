@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.Insurance">
 
     <LinearLayout
@@ -20,17 +21,17 @@
             android:id="@+id/policy_holder_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:hint="Policy Holder Name*"
-            android:inputType="text" />
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/insurance_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:hint="Insurance Company*"
-            android:inputType="text" />
+            android:inputType="textCapWords" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                 android:id="@+id/member_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/primary_view_margin"
                 android:layout_weight="1"
                 android:hint="Member ID*"
                 android:inputType="number" />
@@ -50,7 +51,7 @@
                 android:id="@+id/group_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/primary_view_margin"
                 android:layout_weight="1"
                 android:hint="Group ID*"
                 android:inputType="number" />
@@ -63,12 +64,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Address*"
-            android:inputType="textPostalAddress" />
+            android:inputType="textCapWords" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:orientation="horizontal">
 
             <EditText
@@ -78,7 +79,7 @@
                 android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:hint="City*"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapWords" />
 
             <AutoCompleteTextView
                 android:id="@+id/state"
@@ -86,7 +87,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:hint="State*" />
+                android:hint="State*"
+                android:inputType="textCapWords"/>
 
         </LinearLayout>
 
@@ -94,7 +96,7 @@
             android:id="@+id/zip_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:hint="Zip Code*"
             android:inputType="number" />
 
@@ -102,7 +104,7 @@
             android:id="@+id/phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:hint="Phone Number*"
             android:inputType="phone" />
 

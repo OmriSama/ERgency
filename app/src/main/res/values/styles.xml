@@ -22,8 +22,8 @@
 
     <!-- Style for the description text under the intro images -->
     <style name="introDescriptionTextView" parent="@android:style/Widget.TextView">
+        <item name="android:layout_margin">16dp</item>
         <item name="android:textSize">@dimen/intro_description_text_size</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/intro_text_color</item>
     </style>

@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.QuickRegistrationActivity">
 
     <LinearLayout
@@ -19,14 +20,15 @@
             android:id="@+id/qr_primary_concern_edittext"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:gravity="top"
-            android:hint="Describe your primary concern" />
+            android:hint="Describe your primary concern"
+            android:inputType="textCapSentences"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:paddingLeft="4dp"
             android:text="Pain level (1-lowest, 10-highest): "
             android:textColor="@color/hint_text_color"
@@ -35,7 +37,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:orientation="horizontal"
             android:paddingLeft="4dp">
 
@@ -45,17 +47,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="1"
                 android:textColor="@color/hint_text_color"
-                android:textSize="@dimen/hint_text_size"
-                android:text="1"/>
+                android:textSize="@dimen/hint_text_size"/>
 
             <android.support.v7.widget.AppCompatSeekBar
                 android:id="@+id/qr_pain_scale_seekbar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:max="9"
                 android:layout_weight="30"
-                android:gravity="center_vertical|start"/>
+                android:gravity="center_vertical|start"
+                android:max="9"/>
 
         </LinearLayout>
 
@@ -63,23 +65,25 @@
             android:id="@+id/qr_start_time_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/primary_view_margin"
             android:hint="When did it start?"
-            android:inputType="textPersonName" />
+            android:inputType="textCapSentences" />
 
         <EditText
             android:id="@+id/qr_pain_radiate_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="Does your pain radiate anywhere?" />
+            android:layout_margin="@dimen/primary_view_margin"
+            android:hint="Does your pain radiate anywhere?"
+            android:inputType="textCapSentences"/>
 
         <EditText
             android:id="@+id/qr_associated_symptoms_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="Do you have any associated symtoms?" />
+            android:layout_margin="@dimen/primary_view_margin"
+            android:hint="Do you have any associated symtoms?"
+            android:inputType="textCapSentences" />
 
         <Button
             android:layout_width="match_parent"
