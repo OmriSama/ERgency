@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_physician_info"
     android:layout_width="match_parent"
@@ -8,5 +8,65 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:screenOrientation="portrait"
     tools:context="com.team3.ergency.PhysicianInfo">
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/cc_specialist_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Primary Care Physician"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/cc_specialist_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/primary_view_margin"
+                android:ems="10"
+                android:hint="Full Name"
+                android:inputType="textCapSentences" />
+
+            <EditText
+                android:id="@+id/cc_specialist_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/primary_view_margin"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/cc_add_more"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/primary_view_margin"
+            android:onClick="addMore"
+            android:text="+ Add More" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/primary_view_margin"
+            android:layout_marginLeft="@dimen/primary_view_margin"
+            android:layout_marginRight="@dimen/primary_view_margin"
+            android:layout_marginTop="@dimen/primary_view_margin"
+            android:onClick="saveSpecialistInfo"
+            android:text="Save"
+            android:theme="@style/AppTheme.Button" />
+    </LinearLayout>
+</ScrollView>
