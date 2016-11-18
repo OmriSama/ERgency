@@ -1,7 +1,9 @@
 package com.team3.ergency;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.team3.ergency.helper.LaunchManager;
 
 import java.util.Set;
 
@@ -35,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager view_pager;
     private ViewPagerAdapter view_pager_adapter;
-    private IntroManager intro_manager;
 
     private int[] layouts;
     private TextView[] dots;
     private LinearLayout dots_layout;
+    private LaunchManager launchManager;
 
     private ImageButton arrow_button;
     private Button join_now_button;
@@ -71,12 +75,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        intro_manager = new IntroManager(this);
-        if (!intro_manager.checkIfFirstLaunch()) {
-            intro_manager.setFirstLaunch(false);
-            Intent personal_info = new Intent(this, PersonalInformation.class);
-            startActivity(personal_info);
+        launchManager = new LaunchManager(this);
+        // Skip to homepage if user already filled out a profile
+        Log.d("Skip screen", launchManager.isProfileFilled()+"");
+        if (launchManager.isProfileFilled()) {
+            Intent i = new Intent(this, HomepageActivity.class);
+            startActivity(i);
             finish();
+        }
+        else {
+            // Skip to personal information form if intro pages already displayed to user
+            if (launchManager.isIntroDisplayed()) {
+                Intent i = new Intent(this, PersonalInformation.class);
+                startActivity(i);
+                finish();
+            }
+            else {
+                launchManager.setIntroDisplayed(true);
+            }
         }
 
         /** Set status bar as transparent*/
