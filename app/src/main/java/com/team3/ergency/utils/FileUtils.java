@@ -1,4 +1,4 @@
-package com.team3.ergency.helper;
+package com.team3.ergency.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -17,8 +17,8 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by howard on 11/17/16.
  */
 
-public class FileHelper {
-    private static final String TAG = "FileHelper";
+public class FileUtils {
+    private static final String TAG = "FileUtils";
 
     // Create a new text file in internal storage
     public static FileOutputStream createFileOutputStream(Context context, String fileName, int mode) {

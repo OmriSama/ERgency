@@ -1,4 +1,4 @@
-package com.team3.ergency.helper;
+package com.team3.ergency.gson;
 
 import java.util.List;
 
