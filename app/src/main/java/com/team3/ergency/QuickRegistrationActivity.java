@@ -83,6 +83,8 @@ public class QuickRegistrationActivity extends AppCompatActivity {
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
+            sendInfoToHospital();
+
             Intent i = new Intent(this, Confirmation.class);
             startActivity(i);
             finish();
@@ -93,7 +95,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
     }
 
     //Write edit text field to file or display error if not filled
-    public void checkAndSaveField(EditText editText, String label) {
+    private void checkAndSaveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
             FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
@@ -104,7 +106,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
     }
 
     // Write edit text field to file
-    public void saveField(EditText editText, String label) {
+    private void saveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
         if (userInput.length() > 0) {
             FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
@@ -112,7 +114,7 @@ public class QuickRegistrationActivity extends AppCompatActivity {
     }
 
     //Generate error popup message
-    public void generate_error_popup(ArrayList<String> array) {
+    private void generate_error_popup(ArrayList<String> array) {
         String errorMessage = "Please fill in the following: \n";
         for (int i = 0; i < array.size(); i++) {
             errorMessage += "     " + array.get(i);
@@ -134,5 +136,10 @@ public class QuickRegistrationActivity extends AppCompatActivity {
 
         AlertDialog errorDialog = builder.create();
         errorDialog.show();
+    }
+
+    // Send info to an intent
+    private void sendInfoToHospital() {
+
     }
 }
