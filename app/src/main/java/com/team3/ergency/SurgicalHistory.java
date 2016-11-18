@@ -1,17 +1,13 @@
 package com.team3.ergency;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.team3.ergency.fragment.DatePickerFragment;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,26 +45,19 @@ public class SurgicalHistory extends AppCompatActivity {
         }};
     }
 
-    public void launch_date_picker(View view) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-        DatePickerFragment datePicker = new DatePickerFragment();
-        datePicker.show(getSupportFragmentManager(), "datePicker");
-    }
-
     public void addMore(View view) {
         final int margin_dp = (int) getResources().getDimension(R.dimen.primary_view_margin);
+        final int top_margin_dp = (int) getResources().getDimension(R.dimen.extra_form_vertical_margin);
 
         // Create the layout for the surgery EditText
         LinearLayout.LayoutParams surgeryLayout = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        surgeryLayout.setMargins(margin_dp, margin_dp, margin_dp, margin_dp);
+        surgeryLayout.setMargins(margin_dp, top_margin_dp, margin_dp, margin_dp);
 
         // Create a new EditText for the surgery name
         EditText newSurgery = new EditText(this);
         newSurgery.setHint("Surgery");
-        newSurgery.setInputType(InputType.TYPE_CLASS_TEXT);
+        newSurgery.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         newSurgery.setLayoutParams(surgeryLayout);
 
         surgeryList.add(newSurgery);
@@ -82,14 +71,7 @@ public class SurgicalHistory extends AppCompatActivity {
         // Create a new EditText for the surgery name
         EditText newSurgeryDate = new EditText(this);
         newSurgeryDate.setHint("Date of Surgery");
-        newSurgeryDate.setFocusable(false);
-        newSurgeryDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerFragment date_picker = new DatePickerFragment();
-                date_picker.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
+        newSurgeryDate.setInputType(InputType.TYPE_CLASS_DATETIME);
         newSurgeryDate.setLayoutParams(dateLayout);
 
         // Add EditTexts to ArrayList
@@ -97,7 +79,7 @@ public class SurgicalHistory extends AppCompatActivity {
         linearLayout.addView(newSurgeryDate);
     }
 
-    public void saveSurgeryInfo() {
+    public void saveSurgeryInfo(View view) {
 
         // Open PatientInformation.txt in internal storage to store the patient information
         try {
@@ -106,25 +88,32 @@ public class SurgicalHistory extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        // If the condition field is filled out, then a date must be required. Initially set to false
+        boolean requireDate = false;
+
         for (int i = 0; i < surgeryList.size(); i++) {
             String surgeryInput = surgeryList.get(i).getText().toString();
-            if (surgeryInput.length() < 0) {
+            if (surgeryInput.length() <= 0) {
                 break;
             } else {
                 writeToFile("Surgery: " + surgeryInput + "\n");
+                requireDate = true;
             }
 
             surgeryInput = surgeryDateList.get(i).getText().toString();
-            if (surgeryInput.length() < 0) {
+            if (surgeryInput.length() <= 0) {
                 Toast.makeText(getApplicationContext(), "Please fill in the surgery date", Toast.LENGTH_LONG).show();
             } else {
                 writeToFile("Surgery Date: " + surgeryInput + "\n");
+                requireDate = false;
             }
         }
 
-        Intent intent = new Intent(this, Immunizations.class);
-        startActivity(intent);
-        finish();
+        if (requireDate == false) {
+            Intent intent = new Intent(this, Immunizations.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     // Write information to the file

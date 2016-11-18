@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.team3.ergency.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by knnguy on 11/13/16.
@@ -18,7 +19,6 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -33,6 +33,6 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText editTextView = (EditText) getActivity().findViewById(R.id.date_of_birth);
-        editTextView.setText(month+1 + "/" + day + "/" + year);
+        editTextView.setText((month+1) + "/" + day + "/" + year);
     }
 }

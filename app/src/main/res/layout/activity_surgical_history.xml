@@ -28,7 +28,7 @@
                 android:layout_margin="@dimen/primary_view_margin"
                 android:ems="10"
                 android:hint="Surgery"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <EditText
                 android:id="@+id/sh_date_of_surgery"
@@ -36,9 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/primary_view_margin"
                 android:ems="10"
-                android:focusable="false"
                 android:hint="Date of Surgery"
-                android:onClick="launch_date_picker"/>
+                android:inputType="date" />
 
         </LinearLayout>
 
