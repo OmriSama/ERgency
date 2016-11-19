@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,9 +13,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -78,6 +83,11 @@ public class LocationActivity extends AppCompatActivity
      * Id for the request location id
      */
     private final int REQUEST_LOCATION_ID = 0;
+
+    /**
+     * Location manager
+     */
+    LocationManager mLocationManager;
 
     /**
      * Location to use for getting current location
@@ -284,8 +294,11 @@ public class LocationActivity extends AppCompatActivity
         }
         else {
             Log.d(TAG, "Location permission has already been granted.");
-            getLocation();
-            findNearbyHospitals("hospital+urgent+care+emergency");
+            setupLocationManager();
+            attemptGetLocation();
+            if (mCoordinates != null) {
+                findNearbyHospitals("hospital+urgent+care+emergency");
+            }
         }
     }
 
@@ -321,7 +334,8 @@ public class LocationActivity extends AppCompatActivity
             //  Check if location permission was granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "Location permission granted.");
-                getLocation();
+                setupLocationManager();
+                attemptGetLocation();
                 if (mCoordinates != null) {
                     findNearbyHospitals("hospital+urgent+care+emergency");
                 }
@@ -340,12 +354,61 @@ public class LocationActivity extends AppCompatActivity
     }
 
     /**
+     * Handle Location
+     */
+    private void attemptGetLocation() {
+        if (isLocationOn()) {
+            getLocation();
+        }
+    }
+
+    /**
+     * Acquire reference to system Location Manager
+     */
+    private void setupLocationManager() {
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    /**
+     * Check if GPS is turn on, otherwise prompt the user to turn it on
+     */
+    private boolean isLocationOn() {
+        boolean isGPSEnabled = false;
+
+        try {
+            isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        }
+        catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
+
+        if (!isGPSEnabled) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage("Location service is not enabled. Please enable it through your Location Settings and try again.");
+            dialog.setPositiveButton("Open Location Settings", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(myIntent);
+                }
+            });
+            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {}
+            });
+            dialog.show();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
      * Request a single location update and store that location
      */
     private void getLocation() {
-        // Acquire reference to system Location Manager
-        LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
         final LocationListener mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -361,7 +424,6 @@ public class LocationActivity extends AppCompatActivity
             @Override
             public void onProviderDisabled(String provider) {}
         };
-
         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, null);
         if (mLocation != null) {
