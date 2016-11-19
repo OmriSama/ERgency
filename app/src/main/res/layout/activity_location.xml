@@ -54,7 +54,7 @@
         app:fabSize="normal" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/location_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

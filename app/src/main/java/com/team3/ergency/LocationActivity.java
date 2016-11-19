@@ -126,7 +126,7 @@ public class LocationActivity extends AppCompatActivity
         setContentView(R.layout.activity_location);
 
         // Set progress bar
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mProgressBar = (ProgressBar) findViewById(R.id.location_progress_bar);
 
         // Create GoogleApiClient
         mGoogleApiClient = new GoogleApiClient
