@@ -17,40 +17,42 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/cc_specialist_info"
+            android:id="@+id/phyi_physician_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:text="Primary Care Physician"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/cc_specialist_name"
+                android:id="@+id/phyi_primary_care_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/primary_view_margin"
-                android:ems="10"
-                android:hint="Full Name"
-                android:inputType="textCapSentences" />
+                android:text="Primary Care Physician"
+                android:paddingLeft="4dp"
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <EditText
-                android:id="@+id/cc_specialist_number"
+                android:id="@+id/phyi_primary_care_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/primary_view_margin"
                 android:ems="10"
-                android:hint="Phone Number"
-                android:inputType="number" />
+                android:hint="Physician Full Name"
+                android:inputType="textCapWords" />
+
+            <EditText
+                android:id="@+id/phyi_primary_care_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/primary_view_margin"
+                android:ems="10"
+                android:hint="Phone number"
+                android:inputType="phone" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/cc_add_more"
+            android:id="@+id/phyi_add_more"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
