@@ -1,6 +1,8 @@
 package com.team3.ergency;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +23,11 @@ public class Confirmation extends AppCompatActivity {
     }
 
     private void displayHospital(TextView view) {
-        String hospitalInfo = FileUtils.readFromFile(this, getResources().getString(
-                R.string.output_file_hospital_information));
+        SharedPreferences pref = this.getSharedPreferences(this.getPackageName(), Activity.MODE_PRIVATE);
+
+        String hospitalInfo = pref.getString("HOSPITAL_NAME", "") + "\n" +
+                              pref.getString("HOSPITAL_ADDRESS", "") + "\n" +
+                              pref.getString("HOSPITAL_PHONE", "");
         view.setText(hospitalInfo);
     }
 

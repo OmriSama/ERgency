@@ -2,8 +2,10 @@ package com.team3.ergency;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -49,12 +51,15 @@ import com.team3.ergency.helper.HospitalSearchHelper;
 import com.team3.ergency.gson.NearbySearchResponse;
 import com.team3.ergency.helper.PlaceWrapper;
 import com.team3.ergency.helper.PlaceSuggestion;
+import com.team3.ergency.utils.FileUtils;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.team3.ergency.R.id.hospital_list_view;
+import static com.team3.ergency.utils.FileUtils.closeFileOutputStream;
 
 public class LocationActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback {
@@ -505,27 +510,15 @@ public class LocationActivity extends AppCompatActivity
         hospitalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Create a file stream to store hospital information
-                FileOutputStream fos = null;
-                try {
-                    fos = openFileOutput(getResources().getString(
-                            R.string.output_file_hospital_information), MODE_PRIVATE);
-                }
-                catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
+                SharedPreferences pref = LocationActivity.this.getSharedPreferences(LocationActivity.this.getPackageName(), Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
 
-                // Write hospital information to file stream
-                try {
-                    if (fos != null) {
-                        fos.write(hospitalListView.getItemAtPosition(position)
-                                .toString()
-                                .getBytes());
-                    }
-                }
-                catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
+                Hospital selHospital = (Hospital) hospitalListView.getItemAtPosition(position);
+
+                editor.putString("HOSPITAL_NAME", selHospital.getName());
+                editor.putString("HOSPITAL_ADDRESS", selHospital.getFullAddress());
+                editor.putString("HOSPITAL_PHONE", selHospital.getPhone());
+                editor.apply();
 
                 goToNextActivity();
             }

@@ -80,6 +80,8 @@ public class Hospital {
         return mDuration;
     }
 
+    public String getFullAddress() { return mAddress + ", " + mArea; }
+
     public boolean waitForProcessing() {
         while (!mFinishedProcessing) {
             for (int i = 0; i < 25; ++i) {
