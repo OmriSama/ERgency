@@ -2,8 +2,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="activity_edge_horizontal_margin">8dp</dimen>
     <dimen name="activity_edge_vertical_margin">8dp</dimen>
+
+    <dimen name="dialog_horizontal_margin">24dp</dimen>
+    <dimen name="dialog_vertical_margin">24dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="hospital_list_item_height">88dp</dimen>
 
@@ -14,6 +19,7 @@
     <dimen name="join_now_text_size">20sp</dimen>
     <dimen name="primary_view_margin">5dp</dimen>
     <dimen name="extra_form_vertical_margin">32dp</dimen>
+    <dimen name="form_text_header_padding">4dp</dimen>
 
     <dimen name="save_button_width">200dp</dimen>
 </resources>
