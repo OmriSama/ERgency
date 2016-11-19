@@ -19,4 +19,10 @@ public class HomepageActivity extends AppCompatActivity {
         finish();
     }
 
+    public void editProfile(View view) {
+        Intent locationIntent = new Intent(this, PersonalInformation.class);
+        startActivity(locationIntent);
+        finish();
+    }
+
 }

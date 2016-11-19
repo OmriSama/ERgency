@@ -71,6 +71,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:gravity="center"
+                android:onClick="editProfile"
                 android:text="Edit Profile"
                 android:textSize="16sp"/>
         </RelativeLayout>
