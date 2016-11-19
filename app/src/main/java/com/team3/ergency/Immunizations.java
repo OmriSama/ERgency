@@ -45,7 +45,7 @@ public class Immunizations extends AppCompatActivity {
 
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, Confirmation.class);
+            Intent i = new Intent(this, CongratsActivity.class);
             startActivity(i);
             finish();
         } else {
@@ -57,7 +57,7 @@ public class Immunizations extends AppCompatActivity {
     //Write edit text field to file
     public void saveField(EditText editText, String label) {
         String userInput = editText.getText().toString();
-        if (userInput.length() > 0) {
+        if (userInput != null && userInput.length() > 0) {
             FileUtils.writeToFile(fileOut, label + ": " + userInput + "\n");
         }
     }
