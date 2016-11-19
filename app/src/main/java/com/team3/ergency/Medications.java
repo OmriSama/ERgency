@@ -35,21 +35,21 @@ public class Medications extends AppCompatActivity {
         medication3 = (EditText) findViewById(R.id.m_medication3);
         medicalInfo = (LinearLayout) findViewById(R.id.m_medical_info);
 
-        medicationsList.add(medication1);
-        medicationsList.add(medication2);
-        medicationsList.add(medication3);
-
+        medicationsList = new ArrayList<EditText>() {{
+            add(medication1);
+            add(medication2);
+            add(medication3);
+        }};
     }
 
     public void addMore(View view) {
 
         final int margin_dp = (int) getResources().getDimension(R.dimen.primary_view_margin);
-        final int top_margin_dp = (int) getResources().getDimension(R.dimen.extra_form_vertical_margin);
 
         // Create the layout for the surgery EditText
         LinearLayout.LayoutParams medicationLayout = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        medicationLayout.setMargins(margin_dp, top_margin_dp, margin_dp, margin_dp);
+        medicationLayout.setMargins(margin_dp, margin_dp, margin_dp, margin_dp);
 
         // Create a new EditText for the surgery name
         EditText newMedication = new EditText(this);
