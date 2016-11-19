@@ -1,21 +1,37 @@
 package com.team3.ergency;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team3.ergency.utils.FileUtils;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import static android.R.attr.label;
+
 public class QuickRegistrationActivity extends AppCompatActivity {
+    private static final int EMAIL_INTENT_REQUEST_CODE = 0;
+
+    String piFileName;
+    String qrFileName;
     FileOutputStream fileOut;
 
     private ArrayList<String> unfilledForms;
@@ -33,6 +49,11 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_registration);
 
+        // Setup file names
+        piFileName = getResources().getString(R.string.output_file_patient_information);
+        qrFileName = getResources().getString(R.string.output_file_quick_registration);
+
+        // Setup Views
         painScaleTextView = (TextView) findViewById(R.id.qr_pain_scale_textview);
         painScaleSeekBar = (SeekBar) findViewById(R.id.qr_pain_scale_seekbar);
         setupPainScaleSeekBar();
@@ -62,16 +83,16 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         unfilledForms = new ArrayList<>();
 
         // Create a new file in internal storage to store the patient information
-        fileOut = FileUtils.createFileOutputStream(this,
-                getResources().getString(R.string.output_file_quick_registration),
-                MODE_PRIVATE);
+        fileOut = FileUtils.createFileOutputStream(this, qrFileName, MODE_PRIVATE);
 
         //Get the text from each TextEdit, check if valid, and write to file
         primaryConcern = (EditText) findViewById(R.id.qr_primary_concern_edittext);
         checkAndSaveField(primaryConcern, "Primary Concern");
 
+        FileUtils.writeToFile(fileOut, "Pain Scale: " + painScaleTextView.getText().toString() + "/10\n");
+
         startTime = (EditText) findViewById(R.id.qr_start_time_edittext);
-        checkAndSaveField(startTime, "Start Time");
+        checkAndSaveField(startTime, "Start Date/Time");
 
         painRadiate = (EditText) findViewById(R.id.qr_pain_radiate_edittext);
         saveField(painRadiate, "Pain Radiate");
@@ -84,10 +105,6 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         //Check if any forms are unfilled. If none, then move to next screen
         if (unfilledForms.size() == 0) {
             sendInfoToHospital();
-
-            Intent i = new Intent(this, Confirmation.class);
-            startActivity(i);
-            finish();
         } else {
             //Show alert dialog telling user that some forms still need to be filled out
             generate_error_popup(unfilledForms);
@@ -138,8 +155,67 @@ public class QuickRegistrationActivity extends AppCompatActivity {
         errorDialog.show();
     }
 
-    // Send info to an intent
     private void sendInfoToHospital() {
+        // Configure Shared Preferences
+        SharedPreferences pref = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
 
+        // Configure files
+        File piFile = new File(this.getFilesDir(), piFileName);
+        File qrFile = new File(this.getFilesDir(), qrFileName);
+
+        // Get Content URI for files
+        final Uri piContentUri = FileProvider.getUriForFile(this, "com.team3.ergency.fileprovider", piFile);
+        final Uri qrContentUri = FileProvider.getUriForFile(this, "com.team3.ergency.fileprovider", qrFile);
+
+        // Put all attachment file URI in ArrayList
+        ArrayList<Uri> uriList = new ArrayList<Uri>() {{
+            add(piContentUri);
+            add(qrContentUri);
+        }};
+
+        // Grant permission for reading and writing
+        this.grantUriPermission("com.team3.ergency", piContentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        this.grantUriPermission("com.team3.ergency", qrContentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        // Create new mail Intent to send multiple attachments
+        Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        emailIntent.setType("message/rfc822");
+
+        // Generate source email address
+        String sourceAddress = pref.getString("PATIENT_EMAIL", "");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, sourceAddress);
+
+        // Generate subject line
+        String subjectLine = "New ER Patient: " +
+                             pref.getString("PATIENT_FIRST_NAME", "") + " " +
+                             pref.getString("PATIENT_LAST_NAME", "");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subjectLine);
+
+        // Generate extra text
+        String extraText = "A new patient has registered for emergency care:\n\n" +
+                            "Name: " + pref.getString("PATIENT_FIRST_NAME", "") + " " + pref.getString("PATIENT_LAST_NAME", "") + "\n" +
+                            "Phone: " + pref.getString("PATIENT_PHONE", "") + "\n\n" +
+                            "The patient's medical profile and quick registration can be found in the attachments below.\n\n\n" +
+                            "Message generated by ERgency App";
+        emailIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+
+        // Attach file attachments
+        emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
+
+        try {
+            startActivityForResult(Intent.createChooser(emailIntent, "Sending email..."), 0);
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "Sending failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EMAIL_INTENT_REQUEST_CODE) {
+            Intent i = new Intent(this, Confirmation.class);
+            startActivity(i);
+            finish();
+        }
     }
 }

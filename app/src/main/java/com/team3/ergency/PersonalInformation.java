@@ -3,6 +3,7 @@ package com.team3.ergency;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -84,6 +85,9 @@ public class PersonalInformation extends AppCompatActivity {
 
     // Writes the patient's information to the Patient Information file
     public void saveInfo(View view) {
+        SharedPreferences pref = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
 
         unfilledForms = new ArrayList<>();
 
@@ -95,6 +99,8 @@ public class PersonalInformation extends AppCompatActivity {
         userInput = firstName.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("First Name: " + userInput + "\n");
+            editor.putString("PATIENT_FIRST_NAME", userInput);
+            editor.apply();
         } else {
             unfilledForms.add("First Name");
         }
@@ -112,6 +118,8 @@ public class PersonalInformation extends AppCompatActivity {
         userInput = lastName.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Last Name: " + userInput + "\n");
+            editor.putString("PATIENT_LAST_NAME", userInput);
+            editor.apply();
         } else {
             unfilledForms.add("Last Name");
         }
@@ -162,6 +170,8 @@ public class PersonalInformation extends AppCompatActivity {
         userInput = phoneNumber.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Phone Number: " + userInput + "\n");
+            editor.putString("PATIENT_PHONE", userInput);
+            editor.apply();
         } else {
             unfilledForms.add("Phone Number");
         }
@@ -170,6 +180,8 @@ public class PersonalInformation extends AppCompatActivity {
         userInput = emailAddress.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Email Address: " + userInput + "\n");
+            editor.putString("PATIENT_EMAIL", userInput);
+            editor.apply();
         } else {
             unfilledForms.add("Email Address");
         }
