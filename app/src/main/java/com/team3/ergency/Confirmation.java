@@ -26,8 +26,8 @@ public class Confirmation extends AppCompatActivity {
         SharedPreferences pref = this.getSharedPreferences(this.getPackageName(), Activity.MODE_PRIVATE);
 
         String hospitalInfo = pref.getString("HOSPITAL_NAME", "") + "\n" +
-                              pref.getString("HOSPITAL_ADDRESS", "") + "\n" +
-                              pref.getString("HOSPITAL_PHONE", "");
+                pref.getString("HOSPITAL_ADDRESS", "") + "\n" +
+                pref.getString("HOSPITAL_PHONE", "");
         view.setText(hospitalInfo);
     }
 
