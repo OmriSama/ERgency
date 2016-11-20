@@ -16,8 +16,7 @@ import java.util.ArrayList;
 
 public class Immunizations extends AppCompatActivity {
     FileOutputStream fileOut;
-
-    private ArrayList<String> unfilledForms;
+    String fileName;
 
     private EditText dateOfFluVac;
     private EditText dateOfTdapVac;
@@ -26,6 +25,8 @@ public class Immunizations extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_immunizations);
+
+        fileName = getResources().getString(R.string.output_file_patient_information);
     }
 
     // Date of Birth selection
@@ -35,23 +36,20 @@ public class Immunizations extends AppCompatActivity {
     }
 
     public void saveInfo(View view) {
-        unfilledForms = new ArrayList<>();
 
+        // Create a new file in internal storage to store the patient information
+        fileOut = FileUtils.createFileOutputStream(this, fileName, MODE_PRIVATE);
+
+        //Get the text from each TextEdit and write to file
         dateOfFluVac = (EditText) findViewById(R.id.flu_date_immunization);
         saveField(dateOfFluVac, "Date of Flu Vaccination");
 
         dateOfTdapVac = (EditText) findViewById(R.id.tdap_date_immunization);
         saveField(dateOfTdapVac, "Date of Tdap Vaccination");
 
-        //Check if any forms are unfilled. If none, then move to next screen
-        if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, CongratsActivity.class);
-            startActivity(i);
-            finish();
-        } else {
-            //Show alert dialog telling user that some forms still need to be filled out
-            generate_error_popup(unfilledForms);
-        }
+        Intent i = new Intent(this, CongratsActivity.class);
+        startActivity(i);
+        finish();
     }
 
     //Write edit text field to file
