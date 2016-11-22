@@ -37,6 +37,8 @@ public class Allergies extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        writeToFile("\n\nALLERGIES");
+
         //Write the patient's information into the file
         medicationAllergies = (EditText) findViewById(R.id.medication_allergies);
         input = medicationAllergies.getText().toString();

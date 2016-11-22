@@ -88,6 +88,8 @@ public class SurgicalHistory extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        writeToFile("\n\nSURGICAL HISTORY");
+
         // If the condition field is filled out, then a date must be required. Initially set to false
         boolean requireDate = false;
 

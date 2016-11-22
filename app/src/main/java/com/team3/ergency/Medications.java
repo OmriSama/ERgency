@@ -75,12 +75,14 @@ public class Medications extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        writeToFile("\n\nMEDICATIONS");
+
         for (int i = 0; i < medicationsList.size(); i++) {
             String medicationInput = medicationsList.get(i).getText().toString();
             if (medicationInput.length() <= 0) {
                 break;
             } else {
-                writeToFile("Medication " + medicationNum + ": " + medicationInput + "\n");
+                writeToFile("Medication " + (i+1) + ": " + medicationInput + "\n");
             }
 
         }

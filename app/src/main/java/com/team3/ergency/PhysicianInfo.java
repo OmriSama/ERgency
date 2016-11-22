@@ -70,7 +70,7 @@ public class PhysicianInfo extends AppCompatActivity {
         final EditText specializationEditText = (EditText) dialogView.findViewById(R.id.user_input_dialog);
         alertDialogBuilderSpecialization
                 .setCancelable(false)
-                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
                         String specializationInput = specializationEditText.getText().toString();
                         if (specializationInput.length() <= 0) {
@@ -106,6 +106,8 @@ public class PhysicianInfo extends AppCompatActivity {
         // If the condition field is filled out, then a date must be required. Initially set to false
         boolean requireDate = false;
 
+        writeToFile("\n\nPHYSICIAN INFO");
+
         for (int i = 0; i < specializationList.size(); i++) {
             writeToFile(specializationList.get(i) + "\n");
 
@@ -113,7 +115,7 @@ public class PhysicianInfo extends AppCompatActivity {
             if (specialistInput.length() <= 0) {
                 break;
             } else {
-                writeToFile("Name: " + specialistInput + "\n");
+                writeToFile("Physician Name: " + specialistInput + "\n");
                 // Condition name was entered. Date of diagnosis is required
                 requireDate = true;
             }
@@ -122,7 +124,7 @@ public class PhysicianInfo extends AppCompatActivity {
             if (specialistInput.length() <= 0) {
                 Toast.makeText(getApplicationContext(), "Please fill in the specialist's phone number", Toast.LENGTH_LONG).show();
             } else {
-                writeToFile("Phone: " + specialistInput + "\n");
+                writeToFile("Physician Phone: " + specialistInput + "\n");
                 // Reset the variable
                 requireDate = false;
             }
@@ -171,7 +173,7 @@ public class PhysicianInfo extends AppCompatActivity {
 
         // Create a new EditText for the specialist name
         EditText newSpecialistName = new EditText(this);
-        newSpecialistName.setHint("Full Name");
+        newSpecialistName.setHint("Specialist Name");
         newSpecialistName.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         newSpecialistName.setLayoutParams(specialistLayout);
 
@@ -186,7 +188,7 @@ public class PhysicianInfo extends AppCompatActivity {
         // Create a new EditText for the specialist phone
         EditText newSpecialistPhone = new EditText(this);
         newSpecialistPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        newSpecialistPhone.setHint("Phone number");
+        newSpecialistPhone.setHint("Phone Number");
         newSpecialistPhone.setInputType(InputType.TYPE_CLASS_PHONE);
         newSpecialistPhone.setLayoutParams(dateLayout);
 

@@ -66,6 +66,8 @@ public class EmergencyContact extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        writeToFile("\n\nEMERGENCY CONTACT");
+
         //Get the text from each TextEdit, check if valid, and write to file
         ecFullName = (EditText) findViewById(R.id.ec_full_name);
         userInput = ecFullName.getText().toString();

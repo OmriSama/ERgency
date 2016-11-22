@@ -22,7 +22,7 @@
             android:layout_height="150dp"
             android:layout_margin="@dimen/primary_view_margin"
             android:gravity="top"
-            android:hint="Describe your primary concern"
+            android:hint="Describe your primary concern*"
             android:inputType="textCapSentences"/>
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_view_margin"
-            android:hint="When did it start?"
+            android:hint="When did it start?*"
             android:inputType="textCapSentences" />
 
         <EditText

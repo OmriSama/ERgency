@@ -69,6 +69,8 @@ public class Insurance extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        writeToFile("\n\nINSURANCE");
+
         //Get the text from each TextEdit, check if valid, and write to file
         policyHolderName = (EditText) findViewById(R.id.policy_holder_name);
         userInput = policyHolderName.getText().toString();

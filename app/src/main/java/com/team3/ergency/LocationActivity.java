@@ -13,8 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Looper;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -177,6 +175,7 @@ public class LocationActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(36.766667,-119.416667), 5) );
     }
 
     /**

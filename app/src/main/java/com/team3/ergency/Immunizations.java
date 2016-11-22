@@ -38,7 +38,9 @@ public class Immunizations extends AppCompatActivity {
     public void saveInfo(View view) {
 
         // Create a new file in internal storage to store the patient information
-        fileOut = FileUtils.createFileOutputStream(this, fileName, MODE_PRIVATE);
+        fileOut = FileUtils.createFileOutputStream(this, fileName, MODE_APPEND);
+
+        FileUtils.writeToFile(fileOut, "\n\nIMMUNIZATIONS");
 
         //Get the text from each TextEdit and write to file
         dateOfFluVac = (EditText) findViewById(R.id.flu_date_immunization);
