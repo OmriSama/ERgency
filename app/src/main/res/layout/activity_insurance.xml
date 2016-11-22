@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_view_margin"
-            android:hint="Policy Holder Name*"
+            android:hint="Policy Holder Name"
             android:inputType="textCapWords" />
 
         <EditText
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_view_margin"
-            android:hint="Insurance Company*"
+            android:hint="Insurance Company"
             android:inputType="textCapWords" />
 
         <LinearLayout
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/primary_view_margin"
                 android:layout_weight="1"
-                android:hint="Member ID*"
+                android:hint="Member ID"
                 android:inputType="number" />
 
             <EditText
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/primary_view_margin"
                 android:layout_weight="1"
-                android:hint="Group ID*"
+                android:hint="Group ID"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:hint="Address*"
+            android:hint="Address"
             android:inputType="textCapWords" />
 
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center_vertical"
-                android:hint="City*"
+                android:hint="City"
                 android:inputType="textCapWords" />
 
             <AutoCompleteTextView
@@ -87,7 +87,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:hint="State*"
+                android:hint="State"
                 android:inputType="textCapCharacters"/>
 
         </LinearLayout>
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_view_margin"
-            android:hint="Zip Code*"
+            android:hint="Zip Code"
             android:inputType="number" />
 
         <EditText
@@ -105,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/primary_view_margin"
-            android:hint="Phone Number*"
+            android:hint="Phone Number"
             android:inputType="phone" />
 
         <Button
@@ -116,9 +116,8 @@
             android:layout_marginRight="@dimen/primary_view_margin"
             android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="saveInfo"
-            android:text="Save"
+            android:text="Continue"
             android:theme="@style/AppTheme.Button" />
-
     </LinearLayout>
 
 </ScrollView>

@@ -93,7 +93,7 @@
             android:layout_marginRight="@dimen/primary_view_margin"
             android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="sendInfo"
-            android:text="Send"
+            android:text="Continue"
             android:theme="@style/AppTheme.Button" />
 
     </LinearLayout>

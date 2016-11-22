@@ -75,7 +75,7 @@ public class Medications extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        writeToFile("\n\nMEDICATIONS");
+        writeToFile("\n\nMEDICATIONS\n");
 
         for (int i = 0; i < medicationsList.size(); i++) {
             String medicationInput = medicationsList.get(i).getText().toString();

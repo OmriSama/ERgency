@@ -68,7 +68,7 @@
             android:layout_marginRight="@dimen/primary_view_margin"
             android:layout_marginTop="@dimen/primary_view_margin"
             android:onClick="saveSpecialistInfo"
-            android:text="Save"
+            android:text="Continue"
             android:theme="@style/AppTheme.Button" />
     </LinearLayout>
 </ScrollView>

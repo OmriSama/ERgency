@@ -106,7 +106,7 @@ public class PhysicianInfo extends AppCompatActivity {
         // If the condition field is filled out, then a date must be required. Initially set to false
         boolean requireDate = false;
 
-        writeToFile("\n\nPHYSICIAN INFO");
+        writeToFile("\n\nPHYSICIAN INFO\n");
 
         for (int i = 0; i < specializationList.size(); i++) {
             writeToFile(specializationList.get(i) + "\n");

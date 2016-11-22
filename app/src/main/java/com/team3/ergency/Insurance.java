@@ -60,8 +60,6 @@ public class Insurance extends AppCompatActivity {
 
     // Writes the patient's information to the Patient Information file
     public void saveInfo(View view) {
-        unfilledForms = new ArrayList<>();
-
         // Open PatientInformation.txt in internal storage to store the patient information
         try {
             fileOut = openFileOutput(fileName, MODE_APPEND);
@@ -69,93 +67,69 @@ public class Insurance extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        writeToFile("\n\nINSURANCE");
+        writeToFile("\n\nINSURANCE\n");
 
         //Get the text from each TextEdit, check if valid, and write to file
         policyHolderName = (EditText) findViewById(R.id.policy_holder_name);
         userInput = policyHolderName.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Policy Holder Name: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Policy Holder Name");
         }
 
         insuranceCompany = (EditText) findViewById(R.id.insurance_company);
         userInput = insuranceCompany.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Insurance Company: " + userInput + "\n");
-        } else {
-            writeToFile("Insurance Company: " + "\n");
         }
 
         memberID = (EditText) findViewById(R.id.member_id);
         userInput = memberID.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Member ID: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Member ID");
         }
 
         groupID = (EditText) findViewById(R.id.group_id);
         userInput = groupID.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Group ID: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Group ID");
         }
 
         providerAddress = (EditText) findViewById(address);
         userInput = providerAddress.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Provider Address: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Provider Address");
         }
 
         city = (EditText) findViewById(R.id.city);
         userInput = city.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("City: " + userInput + "\n");
-        } else {
-            unfilledForms.add("City");
         }
 
         userInput = state.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("State: " + userInput + "\n");
-        } else {
-            unfilledForms.add("State");
         }
 
         zipCode = (EditText) findViewById(R.id.zip_code);
         userInput = zipCode.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Zip Code: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Zip Code");
         }
 
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         userInput = phoneNumber.getText().toString();
         if (userInput.length() > 0) {
             writeToFile("Phone Number: " + userInput + "\n");
-        } else {
-            unfilledForms.add("Phone Number");
         }
 
         //Close File
         closeFile(fileOut);
 
-        //Check if any forms are unfilled. If none, then move to next screen
-        if (unfilledForms.size() == 0) {
-            Intent i = new Intent(this, Allergies.class);
-            startActivity(i);
-            finish();
-        } else {
-            //Show alert dialog telling user that some forms still need to be filled out
-            generate_error_popup(unfilledForms);
-        }
-
+        //Go to next screen
+        Intent i = new Intent(this, Allergies.class);
+        startActivity(i);
+        finish();
     }
 
     // Write information to the file

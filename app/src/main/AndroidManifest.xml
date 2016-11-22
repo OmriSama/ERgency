@@ -40,7 +40,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Insurance"
-            android:label="Insurance"
+            android:label="Insurance (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SkipScreen"
@@ -48,27 +48,27 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Allergies"
-            android:label="Allergies"
+            android:label="Allergies (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".PhysicianInfo"
-            android:label="Physician Info"
+            android:label="Physician Info (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Medications"
-            android:label="Medications"
+            android:label="Medications (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ChronicConditions"
-            android:label="Chronic Conditions"
+            android:label="Chronic Conditions (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SurgicalHistory"
-            android:label="Surgical History"
+            android:label="Surgical History (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Immunizations"
-            android:label="Immunizations"
+            android:label="Immunizations (Optional)"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".CongratsActivity"

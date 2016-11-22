@@ -89,7 +89,7 @@ public class ChronicConditions extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        writeToFile("\n\nCHRONIC CONDITIONS");
+        writeToFile("\n\nCHRONIC CONDITIONS\n");
 
         // If the condition field is filled out, then a date must be required. Initially set to false
         boolean requireDate = false;

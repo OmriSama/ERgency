@@ -40,7 +40,7 @@ public class Immunizations extends AppCompatActivity {
         // Create a new file in internal storage to store the patient information
         fileOut = FileUtils.createFileOutputStream(this, fileName, MODE_APPEND);
 
-        FileUtils.writeToFile(fileOut, "\n\nIMMUNIZATIONS");
+        FileUtils.writeToFile(fileOut, "\n\nIMMUNIZATIONS\n");
 
         //Get the text from each TextEdit and write to file
         dateOfFluVac = (EditText) findViewById(R.id.flu_date_immunization);
@@ -48,6 +48,8 @@ public class Immunizations extends AppCompatActivity {
 
         dateOfTdapVac = (EditText) findViewById(R.id.tdap_date_immunization);
         saveField(dateOfTdapVac, "Date of Tdap Vaccination");
+
+        FileUtils.closeFileOutputStream(fileOut);
 
         Intent i = new Intent(this, CongratsActivity.class);
         startActivity(i);
